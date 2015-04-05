@@ -10,6 +10,7 @@
 %
 % ChangeLog:
 %
+% 1.06 - added the type1cm package for scalable math fonts
 % 1.05 - added version check for xkeyval package
 % 1.04 - added custom size handling
 % 1.03 - improved predefined size handling
@@ -17,14 +18,15 @@
 % 1.01 - bugfixed size handling
 % 1.00 - first beamerposter release
 %
-\def\beamerposter@version{1.05}
-\def\beamerposter@date{2007/08/02}
+\def\beamerposter@version{1.06}
+\def\beamerposter@date{2008/02/15}
 \def\beamerposter@msg{beamerposter: latex-beamer poster extension}
 \typeout{Package: \beamerposter@date. v.\beamerposter@version. \beamerposter@msg} 
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{beamerposter}[\beamerposter@date. v.\beamerposter@version. \beamerposter@msg]
 \RequirePackage{xkeyval}[2006/11/18]
+\RequirePackage{type1cm} %% get it from ftp://cam.ctan.org/tex-archive/macros/latex/contrib/type1cm.zip
 
 \newif\ifportrait
 \newif\ifcustomsize
