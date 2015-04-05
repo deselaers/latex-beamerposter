@@ -10,6 +10,10 @@
 %
 % ChangeLog:
 %
+% 1.08 - supports external printer definition files
+%      - added grid mode option
+%      - renamed beamer specific variables
+%      - added font normalizing, so that scale=1.0 is default size for all DIN-A(n) sizes
 % 1.07 - bugfixed custom size handling, portrait or landscape settings are ignored now
 % 1.06 - added the type1cm package for scalable math fonts
 % 1.05 - added version check for xkeyval package
@@ -19,111 +23,131 @@
 % 1.01 - bugfixed size handling
 % 1.00 - first beamerposter release
 %
-\def\beamerposter@version{1.07}
-\def\beamerposter@date{2008/03/11}
-\def\beamerposter@msg{beamerposter: latex-beamer poster extension}
-\typeout{Package: \beamerposter@date. v.\beamerposter@version. \beamerposter@msg} 
+\def\beamerposter@name{beamerposter}
+\def\beamerposter@version{1.08}
+\def\beamerposter@date{2009/08/27}
+\def\beamerposter@msg{latex-beamer poster extension}
+\def\beamerposter@releaseinfo{\beamerposter@date \space v.\beamerposter@version \space \beamerposter@msg}
+\typeout{Package \beamerposter@name: \beamerposter@releaseinfo} 
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{beamerposter}[\beamerposter@date. v.\beamerposter@version. \beamerposter@msg]
+\ProvidesPackage{\beamerposter@name}[\beamerposter@releaseinfo]
 \RequirePackage{xkeyval}[2006/11/18]
 \RequirePackage{type1cm} %% get it from ftp://cam.ctan.org/tex-archive/macros/latex/contrib/type1cm.zip
 
-\newif\ifportrait
-\newif\ifcustomsize
-\newif\ifdebug
+\newif\if@beamerposter@portrait
+\newif\if@beamerposter@customsize
+\newif\if@beamerposter@extern
+\newif\if@beamerposter@debug
+
 
 \DeclareOptionX{size}[a0]{
-  \typeout{beamerposter: checking size input, please wait.}
+  \typeout{\beamerposter@name: checking size input, please wait.}
   \XKV@cc*+[\val\nr]{#1}{a0b,a0,a1,a2,a3,a4,custom}{%
-    \typeout{beamerposter: the input \val\ \nr\ was correct, we proceed.}
+    \typeout{\beamerposter@name: the input \val\ \nr\ was correct, we proceed.}
     \ifcase\nr\relax
     %a0b
-    \setlength{\paperwidth}{119cm}
-    \setlength{\paperheight}{88cm}
-    \setlength{\textwidth}{116cm}
-    \setlength{\textheight}{88cm}
+    \edef\paperwidthValue{119}
+    \edef\paperheightValue{88}
+    \edef\textwidthValue{116}
+    \edef\textheightValue{88}
+    \edef\fontscale{1.0}
     \or
     %a0
-    \setlength{\paperwidth}{118.82cm}
-    \setlength{\paperheight}{83.96cm}
-    \setlength{\textwidth}{117.82cm}
-    \setlength{\textheight}{82.96cm}
+    \edef\paperwidthValue{118.82}
+    \edef\paperheightValue{83.96}
+    \edef\textwidthValue{117.82}
+    \edef\textheightValue{82.96}
+    \edef\fontscale{1.0}
     \or
     %a1
-    \setlength{\paperwidth}{83.96cm}
-    \setlength{\paperheight}{59.4cm}
-    \setlength{\textwidth}{82.96cm}
-    \setlength{\textheight}{58.4cm}
+    \edef\paperwidthValue{83.96}
+    \edef\paperheightValue{59.4}
+    \edef\textwidthValue{82.96}
+    \edef\textheightValue{58.4}
+    \edef\fontscale{0.70710678} %= (1/sqrt(2))^1
     \or
     %a2
-    \setlength{\paperwidth}{59.4cm}
-    \setlength{\paperheight}{41.98cm}
-    \setlength{\textwidth}{58.4cm}
-    \setlength{\textheight}{40.98cm}
+    \edef\paperwidthValue{59.4}
+    \edef\paperheightValue{41.98}
+    \edef\textwidthValue{58.4}
+    \edef\textheightValue{40.98}
+    \edef\fontscale{0.5} %= (1/sqrt(2))^2
     \or
     %a3
-    \setlength{\paperwidth}{41.98cm}
-    \setlength{\paperheight}{29.7cm}
-    \setlength{\textwidth}{40.98cm}
-    \setlength{\textheight}{28.7cm}
+    \edef\paperwidthValue{41.98}
+    \edef\paperheightValue{29.7}
+    \edef\textwidthValue{40.98}
+    \edef\textheightValue{28.7}
+    \edef\fontscale{0.35355339} %= (1/sqrt(2))^3
     \or
     %a4
-    \setlength{\paperwidth}{29.7cm}
-    \setlength{\paperheight}{21.0cm}
-    \setlength{\textwidth}{28.7cm}
-    \setlength{\textheight}{20.0cm}
+    \edef\paperwidthValue{29.7}
+    \edef\paperheightValue{21.0}
+    \edef\textwidthValue{28.7}
+    \edef\textheightValue{20.0}
+    \edef\fontscale{0.25} %= (1/sqrt(2))^4
     \or
-    \customsizetrue
+    \@beamerposter@customsizetrue
     \fi    
   }{%
-    \PackageWarning{beamerposter}{the input \val\ was incorrect and was ignored.}
+    \PackageWarning{\beamerposter@name}{the input \val\ was incorrect and was ignored.}
   }%
-  \typeout{beamerposter: finished size input check.}
+  \typeout{\beamerposter@name: finished size input check.}
 }
 \DeclareOptionX{orientation}[portrait]{
-  \typeout{beamerposter: checking orientation input, please wait.}
+  \typeout{\beamerposter@name: checking orientation input, please wait.}
   \XKV@cc*+[\val\nr]{#1}{portrait,landscape}{%
-    \typeout{beamerposter: the input \val\ \nr\ was correct, we proceed.}
+    \typeout{\beamerposter@name: the input \val\ \nr\ was correct, we proceed.}
     \ifcase\nr\relax
-    \portraittrue
+    \@beamerposter@portraittrue
     \or
-    \portraitfalse
+    \@beamerposter@portraitfalse
     \fi    
   }{%
-    \PackageWarning{beamerposter}{the input \val\ was incorrect and was ignored.}
+    \PackageWarning{\beamerposter@name}{the input \val\ was incorrect and was ignored.}
   }%
-  \typeout{beamerposter: finished orientation check.}
+  \typeout{\beamerposter@name: finished orientation check.}
 }
-\DeclareOptionX{scale}[1.0]{\edef\myfontscale{#1}\typeout{beamerposter: myfontscale=\myfontscale}}
-\DeclareOptionX{width}{\edef\customwidth{#1}\typeout{beamerposter: custom poster width=\customwidth}}
-\DeclareOptionX{height}{\edef\customheight{#1}\typeout{beamerposter: custom poster height=\customheight}}
-\DeclareOptionX{debug}{\typeout{beamerposter: enabled debug mode}\debugtrue}
-\DeclareOptionX*{\PackageWarning{beamerposter}{Unknown option ignored: \CurrentOption}}
+\DeclareOptionX{scale}[1.0]{\edef\myfontscale{#1}\typeout{\beamerposter@name: myfontscale=\myfontscale}}
+\DeclareOptionX{width}{\edef\customwidth{#1}\typeout{\beamerposter@name: custom poster width=\customwidth}}
+\DeclareOptionX{height}{\edef\customheight{#1}\typeout{\beamerposter@name: custom poster height=\customheight}}
+\DeclareOptionX{debug}{\typeout{\beamerposter@name: enabled debug mode}\@beamerposter@debugtrue}
+\DeclareOptionX{grid}{\typeout{\beamerposter@name: enabling grid}\beamertemplategridbackground[1cm]}% Display a grid to help align images
+\DeclareOptionX*{\edef\printerToUse{\CurrentOption.df}\@beamerposter@externtrue}%
+%\DeclareOptionX*{\PackageWarning{\beamerposter@name}{Unknown option ignored: \CurrentOption}}
 %\DeclareOptionX*{\PassOptionsToClass{\CurrentOption}{beamer}}
 \ExecuteOptionsX{size=a0,scale=1.0}
 \ProcessOptionsX\relax
 
-\ifdebug
+\if@beamerposter@debug
   \RequirePackage[debug]{fp}
 \else
   \RequirePackage{fp}
 \fi
 
+%% normalize scale depending on poster size
+\FPupn{\myfontscale}{myfontscale fontscale * 2 round}
+
+
 %% swap sizes for portrait orientation
-\ifportrait
+\if@beamerposter@portrait
   \newdimen\tmp
-  \setlength{\tmp}{\paperwidth}
-  \setlength{\paperwidth}{\paperheight}
+  \setlength{\tmp}{\paperwidthValue cm}
+  \setlength{\paperwidth}{\paperheightValue cm}
   \setlength{\paperheight}{\tmp}
-  \setlength{\tmp}{\textwidth}
-  \setlength{\textwidth}{\textheight}
+  \setlength{\tmp}{\textwidthValue cm}
+  \setlength{\textwidth}{\textheightValue cm}
   \setlength{\textheight}{\tmp}
-\else\relax
+\else
+  \setlength{\paperwidth}{\paperwidthValue cm}
+  \setlength{\paperheight}{\paperheightValue cm}
+  \setlength{\textwidth}{\textwidthValue cm}
+  \setlength{\textheight}{\textheightValue cm}
 \fi
 
 %% overwrite dimensions if custom size
-\ifcustomsize
+\if@beamerposter@customsize
   \setlength{\paperwidth}{\customwidth cm}
   \setlength{\paperheight}{\customheight cm}
   \FPupn{\resulttextwidth}{1 customwidth  -}
@@ -139,9 +163,10 @@
 \setlength{\oddsidemargin}{-25.4 mm} % -1in +0.4cm
 
 %% For the page layout
-\ifdebug
-\typeout{beamerposter: paperwidth=\the\paperwidth, paperheight=\the\paperheight}
-\typeout{beamerposter: textwidth=\the\textwidth, textwidth=\the\textheight}
+\if@beamerposter@debug
+\typeout{\beamerposter@name: paperwidth=\the\paperwidth, paperheight=\the\paperheight}
+\typeout{\beamerposter@name: textwidth=\the\textwidth, textwidth=\the\textheight}
+\typeout{\beamerposter@name: fontscale=\fontscale myfontscale=\myfontscale}
 \fi
 \geometry{
   paperwidth=\the\paperwidth,
@@ -152,6 +177,30 @@
   headsep=0pt,%
   foot=0.5cm  % 
 }
+
+%% now load printer definitions from file, calc poster ratios, scale
+%% to maximum printer size, and check if they still fit
+\if@beamerposter@extern
+  \InputIfFileExists{\printerToUse}{\typeout{load \printerToUse}}{\PackageError{\beamerposter@name}{\printerToUse\space not found!}{Please use another printer definition file}}
+  \ifx\printermaxwidthValue\@empty%
+    \relax%
+  \else%
+    \FPsub{\resultmaxwidth}{\printermaxwidthValue}{\paperwidthValue}
+    \FPifneg{\resultmaxwidth}
+    \PackageError{\beamerposter@name}{%
+      resultmaxwidth=\resultmaxwidth \MessageBreak
+      printermaxwidthValue=\printermaxwidthValue \MessageBreak
+      paperwidthValue=\paperwidthValue \MessageBreak 
+      The specified poster dimensions might not be printable using
+      '\printerToUse'.
+    }{%
+      Try to reduce your poster dimension and have a look at the aspect ratio.
+    }
+    \else
+      \relax
+    \fi
+  \fi
+%\fi
 
 %% scalable vector fonts
 \edef\fontSizeX{12}\edef\fontSizeY{14}
