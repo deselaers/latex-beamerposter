@@ -3,10 +3,12 @@
 * How to create boxes with fixed header height (i.e. baseline problem depending on characters)?.
 Inside your theme you have to change within \setbeamertemplate{block begin} to (by Matthias Wächter, thx :-)
 
->  \begin{beamercolorbox}[center,leftskip=1cm,colsep*=.75ex]{block title}%
->    \usebeamerfont*{block title}%
->    {\rule[-0.4ex]{0mm}{2ex}\insertblocktitle}%
->  \end{beamercolorbox}%
+```
+    \begin{beamercolorbox}[center,leftskip=1cm,colsep*=.75ex]{block title}%
+      \usebeamerfont*{block title}%
+      {\rule[-0.4ex]{0mm}{2ex}\insertblocktitle}%
+    \end{beamercolorbox}%
+```
   
 * How to create boxes with fixed height (e.g. 20cm)?
 Inside your theme you have to change within \setbeamertemplate{block begin} to
@@ -19,6 +21,7 @@ I don't know, because this here doesn't work:
 > \setlength{\rest}{\textheight}
 > \addtolength{\rest}{-\pagetotal}
 > \vskip\rest
+
 Please write me an email if you know how.
 
 * Can I use beamerposter to generate LaTeX beamer 16:9 slides in an aspect ratio for a 16:9 projector or a widescreen TV?
