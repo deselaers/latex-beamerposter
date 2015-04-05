@@ -30,5 +30,5 @@ The beamerposter package is available from CTAN (currently in an outdated versio
 
 We received so many congratulations and also interesting questions about the beamerposter package that we created a [beamerposter googlegroup](http://groups.google.com/group/beamerposter). Feel free to post your questions, source files, templates, or new style files there.
 
-PLEASE: If you have any beamerposter related question, post it there so that I don't need to answer the same question twice Google Groups
+PLEASE: If you have any beamerposter related question, [post it there](http://groups.google.com/group/beamerposter) so that we don't need to answer the same questions multiple times and others may benefit from your questions.
 
