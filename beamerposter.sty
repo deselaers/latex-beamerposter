@@ -10,7 +10,8 @@
 %
 % ChangeLog:
 %
-% 1.10 - imrpoved PackageWarning and PackageInfo outputs
+% 1.11 - removed incompatible paralist package, used beamer's leftmargin lengths instead for indention
+% 1.10 - improved PackageWarning and PackageInfo outputs
 % 1.09 - bugfixed the list indention problem, can be overwritten by user with the \setdefaultleftmargin command.
 %      - added 'printer' option for external printer definition files
 % 1.08 - supports external printer definition files
@@ -27,8 +28,8 @@
 % 1.00 - first beamerposter release
 %
 \def\beamerposter@name{beamerposter}
-\def\beamerposter@version{1.10}
-\def\beamerposter@date{2009/09/02}
+\def\beamerposter@version{1.11}
+\def\beamerposter@date{2009/10/21}
 \def\beamerposter@msg{latex-beamer poster extension}
 \def\beamerposter@releaseinfo{\beamerposter@date \space v.\beamerposter@version \space \beamerposter@msg}
 \def\beamerposter@Error#1#2{\PackageError{\beamerposter@name}{#1}{#2}}
@@ -40,7 +41,6 @@
 \RequirePackage{xkeyval}[2006/11/18]
 \RequirePackage{type1cm} %% get it from ftp://cam.ctan.org/tex-archive/macros/latex/contrib/type1cm.zip
 \RequirePackage{fp}
-\RequirePackage{paralist}
 
 \newif\if@beamerposter@portrait
 \newif\if@beamerposter@customsize
@@ -284,18 +284,25 @@
 % set the normalfont (default)
 \renewcommand*{\normalfont}{\normalsize}
 
-% adapt list indention (e.g. itemize/enumeration/... see paralist docu)
+% adapt list indention (e.g. itemize/enumeration/... see beamer docu)
+\edef\labelWidthValue{1}            % 1em label width
+\edef\labelSepValue{1}              % 1em label separator width
 \edef\indentionLevelValuei{4}       % 4em indention for first level for an A0 poster
 \edef\indentionLevelValueii{2.2}    % etc. ...
 \edef\indentionLevelValueiii{1.87}
-\edef\indentionLevelValueiiii{1.7}
-\edef\indentionLevelValueiiiii{1}
-\edef\indentionLevelValueiiiiii{1}
+%\edef\indentionLevelValueiiii{1.7}
+%\edef\indentionLevelValueiiiii{1}
+%\edef\indentionLevelValueiiiiii{1}
+\FPupn{\labelWidthValue}{labelWidthValue fontscale * 2 round}
+\FPupn{\labelSepValue}{labelSepValue fontscale * 2 round}
 \FPupn{\indentionLevelValuei}{indentionLevelValuei fontscale * 2 round}
 \FPupn{\indentionLevelValueii}{indentionLevelValueii fontscale * 2 round}
 \FPupn{\indentionLevelValueiii}{indentionLevelValueiii fontscale * 2 round}
-\FPupn{\indentionLevelValueiiii}{indentionLevelValueiiii fontscale * 2 round}
-\FPupn{\indentionLevelValueiiiii}{indentionLevelValueiiiii fontscale * 2 round}
-\FPupn{\indentionLevelValueiiiiii}{indentionLevelValueiiiiii fontscale * 2 round}
-\setdefaultleftmargin{\indentionLevelValuei em}{\indentionLevelValueii em}{\indentionLevelValueiii em}{\indentionLevelValueiiii em}{\indentionLevelValueiiiii em}{\indentionLevelValueiiiiii em}
-\setbeamersize{description width=\indentionLevelValuei em} % the description environment needs special treatment
+%\FPupn{\indentionLevelValueiiii}{indentionLevelValueiiii fontscale * 2 round}
+%\FPupn{\indentionLevelValueiiiii}{indentionLevelValueiiiii fontscale * 2 round}
+%\FPupn{\indentionLevelValueiiiiii}{indentionLevelValueiiiiii fontscale * 2 round}
+\setlength{\leftmargini}{\indentionLevelValuei em}%
+\setlength{\leftmarginii}{\indentionLevelValueii em}%
+\setlength{\leftmarginiii}{\indentionLevelValueiii em}%
+\setlength{\labelwidth}{\labelWidthValue em}%
+\setlength{\labelsep}{\labelSepValue em}%
