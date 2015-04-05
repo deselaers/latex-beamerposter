@@ -10,6 +10,7 @@
 %
 % ChangeLog:
 %
+% 1.07 - bugfixed custom size handling, portrait or landscape settings are ignored now
 % 1.06 - added the type1cm package for scalable math fonts
 % 1.05 - added version check for xkeyval package
 % 1.04 - added custom size handling
@@ -18,8 +19,8 @@
 % 1.01 - bugfixed size handling
 % 1.00 - first beamerposter release
 %
-\def\beamerposter@version{1.06}
-\def\beamerposter@date{2008/02/15}
+\def\beamerposter@version{1.07}
+\def\beamerposter@date{2008/03/11}
 \def\beamerposter@msg{beamerposter: latex-beamer poster extension}
 \typeout{Package: \beamerposter@date. v.\beamerposter@version. \beamerposter@msg} 
 
@@ -100,22 +101,13 @@
 \DeclareOptionX{debug}{\typeout{beamerposter: enabled debug mode}\debugtrue}
 \DeclareOptionX*{\PackageWarning{beamerposter}{Unknown option ignored: \CurrentOption}}
 %\DeclareOptionX*{\PassOptionsToClass{\CurrentOption}{beamer}}
-\ExecuteOptionsX{size=a0,scale=1.0,orientation=portrait}
+\ExecuteOptionsX{size=a0,scale=1.0}
 \ProcessOptionsX\relax
 
 \ifdebug
   \RequirePackage[debug]{fp}
 \else
   \RequirePackage{fp}
-\fi
-
-\ifcustomsize
-  \setlength{\paperwidth}{\customwidth cm}
-  \setlength{\paperheight}{\customheight cm}
-  \FPupn{\resulttextwidth}{1 customwidth  -}
-  \FPupn{\resulttextheight}{1 customheight -}
-  \setlength{\textwidth}{\resulttextwidth cm}
-  \setlength{\textheight}{\resulttextheight cm}
 \fi
 
 %% swap sizes for portrait orientation
@@ -128,6 +120,16 @@
   \setlength{\textwidth}{\textheight}
   \setlength{\textheight}{\tmp}
 \else\relax
+\fi
+
+%% overwrite dimensions if custom size
+\ifcustomsize
+  \setlength{\paperwidth}{\customwidth cm}
+  \setlength{\paperheight}{\customheight cm}
+  \FPupn{\resulttextwidth}{1 customwidth  -}
+  \FPupn{\resulttextheight}{1 customheight -}
+  \setlength{\textwidth}{\resulttextwidth cm}
+  \setlength{\textheight}{\resulttextheight cm}
 \fi
 
 %% Setting proper dimensions for a DIN A0 printer
