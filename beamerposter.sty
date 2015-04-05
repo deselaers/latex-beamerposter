@@ -10,10 +10,12 @@
 %
 % ChangeLog:
 %
+% 1.09 - bugfixed the list indention problem, can be overwritten by user with the \setdefaultleftmargin command.
+%      - added 'printer' option for external printer definition files
 % 1.08 - supports external printer definition files
 %      - added grid mode option
 %      - renamed beamer specific variables
-%      - added font normalizing, so that scale=1.0 is default size for all DIN-A(n) sizes
+%      - added font size normalization, so that scale=1.0 is the default font size for all DIN-A(n) sizes
 % 1.07 - bugfixed custom size handling, portrait or landscape settings are ignored now
 % 1.06 - added the type1cm package for scalable math fonts
 % 1.05 - added version check for xkeyval package
@@ -24,8 +26,8 @@
 % 1.00 - first beamerposter release
 %
 \def\beamerposter@name{beamerposter}
-\def\beamerposter@version{1.08}
-\def\beamerposter@date{2009/08/27}
+\def\beamerposter@version{1.09}
+\def\beamerposter@date{2009/08/28}
 \def\beamerposter@msg{latex-beamer poster extension}
 \def\beamerposter@releaseinfo{\beamerposter@date \space v.\beamerposter@version \space \beamerposter@msg}
 \typeout{Package \beamerposter@name: \beamerposter@releaseinfo} 
@@ -34,6 +36,8 @@
 \ProvidesPackage{\beamerposter@name}[\beamerposter@releaseinfo]
 \RequirePackage{xkeyval}[2006/11/18]
 \RequirePackage{type1cm} %% get it from ftp://cam.ctan.org/tex-archive/macros/latex/contrib/type1cm.zip
+\RequirePackage{fp}
+\RequirePackage{paralist}
 
 \newif\if@beamerposter@portrait
 \newif\if@beamerposter@customsize
@@ -65,28 +69,28 @@
     \edef\paperheightValue{59.4}
     \edef\textwidthValue{82.96}
     \edef\textheightValue{58.4}
-    \edef\fontscale{0.70710678} %= (1/sqrt(2))^1
+    \edef\fontscale{0.70710678}    % fontscale=(1/sqrt(2))^1
     \or
     %a2
     \edef\paperwidthValue{59.4}
     \edef\paperheightValue{41.98}
     \edef\textwidthValue{58.4}
     \edef\textheightValue{40.98}
-    \edef\fontscale{0.5} %= (1/sqrt(2))^2
+    \edef\fontscale{0.5}           % fontscale=(1/sqrt(2))^2
     \or
     %a3
     \edef\paperwidthValue{41.98}
     \edef\paperheightValue{29.7}
     \edef\textwidthValue{40.98}
     \edef\textheightValue{28.7}
-    \edef\fontscale{0.35355339} %= (1/sqrt(2))^3
+    \edef\fontscale{0.35355339}    % fontscale=(1/sqrt(2))^3
     \or
     %a4
     \edef\paperwidthValue{29.7}
     \edef\paperheightValue{21.0}
     \edef\textwidthValue{28.7}
     \edef\textheightValue{20.0}
-    \edef\fontscale{0.25} %= (1/sqrt(2))^4
+    \edef\fontscale{0.25}          % fontscale=(1/sqrt(2))^4
     \or
     \@beamerposter@customsizetrue
     \fi    
@@ -114,21 +118,19 @@
 \DeclareOptionX{height}{\edef\customheight{#1}\typeout{\beamerposter@name: custom poster height=\customheight}}
 \DeclareOptionX{debug}{\typeout{\beamerposter@name: enabled debug mode}\@beamerposter@debugtrue}
 \DeclareOptionX{grid}{\typeout{\beamerposter@name: enabling grid}\beamertemplategridbackground[1cm]}% Display a grid to help align images
-\DeclareOptionX*{\edef\printerToUse{\CurrentOption.df}\@beamerposter@externtrue}%
-%\DeclareOptionX*{\PackageWarning{\beamerposter@name}{Unknown option ignored: \CurrentOption}}
+\DeclareOptionX{printer}{\edef\printerToUse{#1}\@beamerposter@externtrue}
+\DeclareOptionX*{\PackageWarning{\beamerposter@name}{Unknown option ignored: \CurrentOption}}
 %\DeclareOptionX*{\PassOptionsToClass{\CurrentOption}{beamer}}
 \ExecuteOptionsX{size=a0,scale=1.0}
 \ProcessOptionsX\relax
 
+%% enable debug mode for fp package (mainly for upn functions)
 \if@beamerposter@debug
-  \RequirePackage[debug]{fp}
-\else
-  \RequirePackage{fp}
+  \FPdebugtrue  
 \fi
 
 %% normalize scale depending on poster size
 \FPupn{\myfontscale}{myfontscale fontscale * 2 round}
-
 
 %% swap sizes for portrait orientation
 \if@beamerposter@portrait
@@ -166,7 +168,7 @@
 \if@beamerposter@debug
 \typeout{\beamerposter@name: paperwidth=\the\paperwidth, paperheight=\the\paperheight}
 \typeout{\beamerposter@name: textwidth=\the\textwidth, textwidth=\the\textheight}
-\typeout{\beamerposter@name: fontscale=\fontscale myfontscale=\myfontscale}
+\typeout{\beamerposter@name: fontscale=\fontscale, myfontscale=\myfontscale}
 \fi
 \geometry{
   paperwidth=\the\paperwidth,
@@ -178,13 +180,23 @@
   foot=0.5cm  % 
 }
 
-%% now load printer definitions from file, calc poster ratios, scale
-%% to maximum printer size, and check if they still fit
+%%
+%% printer definition file example 'rwth-glossy-uv.df':
+%% ----
+%% \typeout{beamerposter: RWTH RZ printer, glossy paper, UV resistant, maximum settings}
+%% \edef\printermaxwidthValue{108} %unit should be cm
+%% \newlength{\printermaxwidth}
+%% \setlength{\printermaxwidth}{\printermaxwidthValue cm}
+%% ----
+%%
+%% now load printer definitions from file (e.g. \usepackage[printer=rwth-glossy-uv.df]{beamerposter}")
 \if@beamerposter@extern
   \InputIfFileExists{\printerToUse}{\typeout{load \printerToUse}}{\PackageError{\beamerposter@name}{\printerToUse\space not found!}{Please use another printer definition file}}
   \ifx\printermaxwidthValue\@empty%
     \relax%
   \else%
+    %%  @todo: calc poster ratios, scale to maximum printer size, and check if they still fit
+    %%  this here is still very basic ...
     \FPsub{\resultmaxwidth}{\printermaxwidthValue}{\paperwidthValue}
     \FPifneg{\resultmaxwidth}
     \PackageError{\beamerposter@name}{%
@@ -270,3 +282,19 @@
 
 % set the normalfont (default)
 \renewcommand*{\normalfont}{\normalsize}
+
+% adapt list indention (e.g. itemize/enumeration/... see paralist docu)
+\edef\indentionLevelValuei{4}       % 4em indention for first level for an A0 poster
+\edef\indentionLevelValueii{2.2}    % etc. ...
+\edef\indentionLevelValueiii{1.87}
+\edef\indentionLevelValueiiii{1.7}
+\edef\indentionLevelValueiiiii{1}
+\edef\indentionLevelValueiiiiii{1}
+\FPupn{\indentionLevelValuei}{indentionLevelValuei fontscale * 2 round}
+\FPupn{\indentionLevelValueii}{indentionLevelValueii fontscale * 2 round}
+\FPupn{\indentionLevelValueiii}{indentionLevelValueiii fontscale * 2 round}
+\FPupn{\indentionLevelValueiiii}{indentionLevelValueiiii fontscale * 2 round}
+\FPupn{\indentionLevelValueiiiii}{indentionLevelValueiiiii fontscale * 2 round}
+\FPupn{\indentionLevelValueiiiiii}{indentionLevelValueiiiiii fontscale * 2 round}
+\setdefaultleftmargin{\indentionLevelValuei em}{\indentionLevelValueii em}{\indentionLevelValueiii em}{\indentionLevelValueiiii em}{\indentionLevelValueiiiii em}{\indentionLevelValueiiiiii em}
+\setbeamersize{description width=\indentionLevelValuei em} % the description environment needs special treatment
