@@ -3,7 +3,7 @@
 ## LaTeX poster with beamerposter - beamer - a0poster	
 Creating a scientific LaTeX poster with the beamerposter package
 
-The LaTeX beamerposter package was created by Philippe Dreuw and Thomas Deselaers. It is an extension of the LaTeX beamer and the a0poster classes in order to create LaTeX posters, e.g. a DIN-A0 size LaTeX poster in landscape or portrait orientation. Furthermore it is possible to scale the poster fonts to your needs.
+The LaTeX beamerposter package was created by [Philippe Dreuw](http://www-i6.informatik.rwth-aachen.de/~dreuw/) and [Thomas Deselaers](http://thomas.deselaers.de). It is an extension of the LaTeX beamer and the a0poster classes in order to create LaTeX posters, e.g. a DIN-A0 size LaTeX poster in landscape or portrait orientation. Furthermore it is possible to scale the poster fonts to your needs.
 
 The package allows you to benefit from the nice color box handling and alignment in the beamer class (e.g. with rounded corners and shadows) in order to create quite fast pretty conference posters.
 
