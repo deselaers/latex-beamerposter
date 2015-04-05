@@ -10,6 +10,7 @@
 %
 % ChangeLog:
 %
+% 1.10 - imrpoved PackageWarning and PackageInfo outputs
 % 1.09 - bugfixed the list indention problem, can be overwritten by user with the \setdefaultleftmargin command.
 %      - added 'printer' option for external printer definition files
 % 1.08 - supports external printer definition files
@@ -26,11 +27,13 @@
 % 1.00 - first beamerposter release
 %
 \def\beamerposter@name{beamerposter}
-\def\beamerposter@version{1.09}
-\def\beamerposter@date{2009/08/28}
+\def\beamerposter@version{1.10}
+\def\beamerposter@date{2009/09/02}
 \def\beamerposter@msg{latex-beamer poster extension}
 \def\beamerposter@releaseinfo{\beamerposter@date \space v.\beamerposter@version \space \beamerposter@msg}
-\typeout{Package \beamerposter@name: \beamerposter@releaseinfo} 
+\def\beamerposter@Error#1#2{\PackageError{\beamerposter@name}{#1}{#2}}
+\def\beamerposter@Warning#1{\PackageWarning{\beamerposter@name}{#1}}
+\def\beamerposter@Info#1{\PackageInfo{\beamerposter@name}{#1}}
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{\beamerposter@name}[\beamerposter@releaseinfo]
@@ -46,9 +49,9 @@
 
 
 \DeclareOptionX{size}[a0]{
-  \typeout{\beamerposter@name: checking size input, please wait.}
+  \beamerposter@Info{checking size input, please wait.}
   \XKV@cc*+[\val\nr]{#1}{a0b,a0,a1,a2,a3,a4,custom}{%
-    \typeout{\beamerposter@name: the input \val\ \nr\ was correct, we proceed.}
+    \beamerposter@Info{the input \val\ \nr\ was correct, we proceed.}
     \ifcase\nr\relax
     %a0b
     \edef\paperwidthValue{119}
@@ -95,31 +98,31 @@
     \@beamerposter@customsizetrue
     \fi    
   }{%
-    \PackageWarning{\beamerposter@name}{the input \val\ was incorrect and was ignored.}
+    \beamerposter@Warning{the input \val\ was incorrect and was ignored.}
   }%
-  \typeout{\beamerposter@name: finished size input check.}
+  \beamerposter@Info{finished size input check.}
 }
 \DeclareOptionX{orientation}[portrait]{
-  \typeout{\beamerposter@name: checking orientation input, please wait.}
+  \beamerposter@Info{checking orientation input, please wait.}
   \XKV@cc*+[\val\nr]{#1}{portrait,landscape}{%
-    \typeout{\beamerposter@name: the input \val\ \nr\ was correct, we proceed.}
+    \beamerposter@Info{the input \val\ \nr\ was correct, we proceed.}
     \ifcase\nr\relax
     \@beamerposter@portraittrue
     \or
     \@beamerposter@portraitfalse
     \fi    
   }{%
-    \PackageWarning{\beamerposter@name}{the input \val\ was incorrect and was ignored.}
+    \beamerposter@Warning{the input \val\ was incorrect and was ignored.}
   }%
-  \typeout{\beamerposter@name: finished orientation check.}
+  \beamerposter@Info{finished orientation check.}
 }
-\DeclareOptionX{scale}[1.0]{\edef\myfontscale{#1}\typeout{\beamerposter@name: myfontscale=\myfontscale}}
-\DeclareOptionX{width}{\edef\customwidth{#1}\typeout{\beamerposter@name: custom poster width=\customwidth}}
-\DeclareOptionX{height}{\edef\customheight{#1}\typeout{\beamerposter@name: custom poster height=\customheight}}
-\DeclareOptionX{debug}{\typeout{\beamerposter@name: enabled debug mode}\@beamerposter@debugtrue}
-\DeclareOptionX{grid}{\typeout{\beamerposter@name: enabling grid}\beamertemplategridbackground[1cm]}% Display a grid to help align images
+\DeclareOptionX{scale}[1.0]{\edef\myfontscale{#1}\beamerposter@Info{myfontscale=\myfontscale}}
+\DeclareOptionX{width}{\edef\customwidth{#1}\beamerposter@Info{custom poster width=\customwidth}}
+\DeclareOptionX{height}{\edef\customheight{#1}\beamerposter@Info{custom poster height=\customheight}}
+\DeclareOptionX{debug}{\beamerposter@Info{enabled debug mode}\@beamerposter@debugtrue}
+\DeclareOptionX{grid}{\beamerposter@Info{enabling grid}\beamertemplategridbackground[1cm]}% Display a grid to help align images
 \DeclareOptionX{printer}{\edef\printerToUse{#1}\@beamerposter@externtrue}
-\DeclareOptionX*{\PackageWarning{\beamerposter@name}{Unknown option ignored: \CurrentOption}}
+\DeclareOptionX*{\beamerposter@Warning{Unknown option ignored: \CurrentOption}}
 %\DeclareOptionX*{\PassOptionsToClass{\CurrentOption}{beamer}}
 \ExecuteOptionsX{size=a0,scale=1.0}
 \ProcessOptionsX\relax
@@ -165,11 +168,9 @@
 \setlength{\oddsidemargin}{-25.4 mm} % -1in +0.4cm
 
 %% For the page layout
-\if@beamerposter@debug
-\typeout{\beamerposter@name: paperwidth=\the\paperwidth, paperheight=\the\paperheight}
-\typeout{\beamerposter@name: textwidth=\the\textwidth, textwidth=\the\textheight}
-\typeout{\beamerposter@name: fontscale=\fontscale, myfontscale=\myfontscale}
-\fi
+\beamerposter@Info{paperwidth=\the\paperwidth, paperheight=\the\paperheight}
+\beamerposter@Info{textwidth=\the\textwidth, textwidth=\the\textheight}
+\beamerposter@Info{fontscale=\fontscale, myfontscale=\myfontscale}
 \geometry{
   paperwidth=\the\paperwidth,
   paperheight=\the\paperheight,
@@ -191,7 +192,7 @@
 %%
 %% now load printer definitions from file (e.g. \usepackage[printer=rwth-glossy-uv.df]{beamerposter}")
 \if@beamerposter@extern
-  \InputIfFileExists{\printerToUse}{\typeout{load \printerToUse}}{\PackageError{\beamerposter@name}{\printerToUse\space not found!}{Please use another printer definition file}}
+  \InputIfFileExists{\printerToUse}{\typeout{load \printerToUse}}{\beamerposter@Error{\printerToUse\space not found!}{Please use another printer definition file}}
   \ifx\printermaxwidthValue\@empty%
     \relax%
   \else%
@@ -199,7 +200,7 @@
     %%  this here is still very basic ...
     \FPsub{\resultmaxwidth}{\printermaxwidthValue}{\paperwidthValue}
     \FPifneg{\resultmaxwidth}
-    \PackageError{\beamerposter@name}{%
+    \beamerposter@Error{%
       resultmaxwidth=\resultmaxwidth \MessageBreak
       printermaxwidthValue=\printermaxwidthValue \MessageBreak
       paperwidthValue=\paperwidthValue \MessageBreak 
