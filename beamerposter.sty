@@ -9,7 +9,8 @@
 %
 %
 % ChangeLog:
-%
+% 1.12 - bugfixed fontscale/myfontscale indention calculation
+%      - added beamerposterarticle icon format
 % 1.11 - removed incompatible paralist package, used beamer's leftmargin lengths instead for indention
 % 1.10 - improved PackageWarning and PackageInfo outputs
 % 1.09 - bugfixed the list indention problem, can be overwritten by user with the \setdefaultleftmargin command.
@@ -28,8 +29,8 @@
 % 1.00 - first beamerposter release
 %
 \def\beamerposter@name{beamerposter}
-\def\beamerposter@version{1.11}
-\def\beamerposter@date{2009/10/21}
+\def\beamerposter@version{1.12}
+\def\beamerposter@date{2010/11/18}
 \def\beamerposter@msg{latex-beamer poster extension}
 \def\beamerposter@releaseinfo{\beamerposter@date \space v.\beamerposter@version \space \beamerposter@msg}
 \def\beamerposter@Error#1#2{\PackageError{\beamerposter@name}{#1}{#2}}
@@ -293,16 +294,23 @@
 %\edef\indentionLevelValueiiii{1.7}
 %\edef\indentionLevelValueiiiii{1}
 %\edef\indentionLevelValueiiiiii{1}
-\FPupn{\labelWidthValue}{labelWidthValue fontscale * 2 round}
-\FPupn{\labelSepValue}{labelSepValue fontscale * 2 round}
-\FPupn{\indentionLevelValuei}{indentionLevelValuei fontscale * 2 round}
-\FPupn{\indentionLevelValueii}{indentionLevelValueii fontscale * 2 round}
-\FPupn{\indentionLevelValueiii}{indentionLevelValueiii fontscale * 2 round}
-%\FPupn{\indentionLevelValueiiii}{indentionLevelValueiiii fontscale * 2 round}
-%\FPupn{\indentionLevelValueiiiii}{indentionLevelValueiiiii fontscale * 2 round}
-%\FPupn{\indentionLevelValueiiiiii}{indentionLevelValueiiiiii fontscale * 2 round}
+\FPupn{\labelWidthValue}{labelWidthValue myfontscale * 2 round}
+\FPupn{\labelSepValue}{labelSepValue myfontscale * 2 round}
+\FPupn{\indentionLevelValuei}{indentionLevelValuei myfontscale * 2 round}
+\FPupn{\indentionLevelValueii}{indentionLevelValueii myfontscale * 2 round}
+\FPupn{\indentionLevelValueiii}{indentionLevelValueiii myfontscale * 2 round}
+%\FPupn{\indentionLevelValueiiii}{indentionLevelValueiiii myfontscale * 2 round}
+%\FPupn{\indentionLevelValueiiiii}{indentionLevelValueiiiii myfontscale * 2 round}
+%\FPupn{\indentionLevelValueiiiiii}{indentionLevelValueiiiiii myfontscale * 2 round}
 \setlength{\leftmargini}{\indentionLevelValuei em}%
 \setlength{\leftmarginii}{\indentionLevelValueii em}%
 \setlength{\leftmarginiii}{\indentionLevelValueiii em}%
 \setlength{\labelwidth}{\labelWidthValue em}%
 \setlength{\labelsep}{\labelSepValue em}%
+
+% define bib item template with larger graphic
+\edef\bibIconScaleValue{2}            % begin with 2
+\FPupn{\bibIconScaleValue}{bibIconScaleValue myfontscale * 2 round}
+\defbeamertemplate{bibliography item}{beamerposterarticle}
+{\lower5pt\hbox{\scalebox{\bibIconScaleValue}{\pgfuseimage{beamericonarticle}}}}
+
