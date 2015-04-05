@@ -1,0 +1,153 @@
+%%
+%% This is file `xkvex1.tex',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% xkeyval.dtx  (with options: `xkvex1')
+%% 
+%% ---------------------------------------
+%% Copyright (C) 2004-2006 Hendri Adriaens
+%% ---------------------------------------
+%%
+%% This work may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License, either version 1.3
+%% of this license or (at your option) any later version.
+%% The latest version of this license is in
+%%   http://www.latex-project.org/lppl.txt
+%% and version 1.3 or later is part of all distributions of LaTeX
+%% version 2003/12/01 or later.
+%%
+%% This work has the LPPL maintenance status "maintained".
+%%
+%% This Current Maintainer of this work is Hendri Adriaens.
+%%
+%% This work consists of the file xkeyval.dtx and derived files
+%% keyval.tex, xkvtxhdr.tex, xkeyval.sty, xkeyval.tex, xkvview.sty,
+%% xkvltxp.sty, pst-xkey.tex, pst-xkey.sty, xkveca.cls, xkvecb.cls,
+%% xkvesa.sty, xkvesb.sty, xkvesc.sty, xkvex1.tex, xkvex2.tex,
+%% xkvex3.tex and xkvex4.tex.
+%%
+%% The following files constitute the xkeyval bundle and must be
+%% distributed as a whole: readme, xkeyval.pdf, keyval.tex,
+%% pst-xkey.sty, pst-xkey.tex, xkeyval.sty, xkeyval.tex, xkvview.sty,
+%% xkvltxp.sty, xkvtxhdr.tex, pst-xkey.dtx and xkeyval.dtx.
+%%
+\input xkeyval
+
+\catcode`\@=11
+
+%% xkeyval package: TeX example
+%% Hendri Adriaens
+
+\noindent Example 1. This example demonstrates the use of the new
+macros for setting keys of the `xkeyval' package. Have a look at the
+source for information about this example and to understand the output.
+
+%% Define keys.
+\define@key{fami}{keyi}{key 1: #1 }
+\define@key{famii}{keyii}{key 2: #1 }
+\define@key{famiii}{keyiii}[test 2]{key 3: #1 }
+\define@key{famiv}{keyi}{key 4: #1 }
+
+%% Set keys from multiple families.
+\setkeys{fami,famii,famiii}{keyi=test 1,keyiii}
+
+%% Multiplely defined keys will be taken from the first family on the
+%% list that defines the key. When + is used, all families
+%% defining the key will set it.
+\setkeys{fami,famiv}{keyi=test 3}\par
+\setkeys{famiv,fami}{keyi=test 4}\par
+\setkeys+{fami,famiv}{keyi=test 5}\par
+
+%% Starred form sets keys that it can find in the families specified.
+%% Keys that cannot be located will be put onto a list for later use
+%% by \setrmkeys.
+\setkeys*{famiv}{keyi=test 9,keyii=http://www.test10.com,
+  keyiii=test 11}\par
+
+%% Try to set the remaining keys from the previous step. The starred
+%% version defines a new list in case there are still keys that cannot
+%% be located in the given families. The command below does not do
+%% anything since the `keyi' key has already been taken from family
+%% `famiv' above.
+\setrmkeys*{fami}\par
+
+%% The normal version will complain (as \setkeys) when it cannot locate
+%% a key which was previously submitted to \xsetkeys and hasn't been
+%% set yet by previous commands. `xkeyval' commands can also be used to
+%% set `keyval' options.
+\setrmkeys{famii,famiii}\par
+
+%% Set keys, excluding some keys.
+\setkeys{fami,famii,famiii}[keyi,keyiii]{keyi=test 6,keyii=test
+7,keyiii=test 8}\par
+
+%% Test whether a key is defined in a family from the list.
+\key@ifundefined{fami,famii}{keyiii}
+{keyiii is not defined in family `fami' or `famii'}
+{keyiii is defined in family `fami' or `famii'}
+
+%% Define some keys and macros.
+\define@cmdkey[my]{fama}[my@]{keya}[none]{}
+\define@choicekey[my]{fama}{keyb}{a,b,c}[b]{correct input: #1}
+\define@boolkey[my]{famb}{keyc}[true]{}
+\def\testa{\setkeys[my]{fama}}
+\def\testb{\setkeys[my]{famb}}
+\def\testset{\setkeys[my]{fama,famb}}
+
+%% Now \testa can only set keya, \testb can only
+%% set keyb and \testset can set both.
+\testa{keya}
+  \my@keya\
+\testa{keyb}
+\testb{keyc}
+  \ifmy@famb@keyc true \else false \fi
+\testset{keya=test 11,keyb=c,keyc=false}
+  \my@keya\space
+  \ifmy@famb@keyc true \else false \fi
+
+%% Pointer system
+
+%% First we (re)define some keys.
+\define@key{fam}{keyi}{key 1: #1 }
+\define@key{fam}{keyii}{key 2: #1 }
+\define@key{fam}{keyiii}[test 2]{key 3: #1 }
+
+%% Pointers can be used to copy the value of other keys in the same
+%% family. This can be done in two ways. The first example shows `on
+%% the spot' value saving.
+\setkeys{fam}{\savevalue{keyi}=test 12,\savevalue{keyii}=\usevalue{keyi}}
+\setkeys{fam}{keyiii=\usevalue{keyii}}
+
+%% However, you can also predefine the keys to be saved for the entire
+%% document with a single command.
+\savekeys{fam}{keyi,keyii}
+\setkeys{fam}{keyi=test 13,keyii=\usevalue{keyi}}
+\setkeys{fam}{keyiii=\usevalue{keyii}}
+
+%% Pointers can be used in default values as well. Remember that the
+%% previous example used \savekeys for keyi and keyii.
+\define@key{fam}{keyi}{keyi: #1 }
+\define@key{fam}{keyii}[\usevalue{keyi}]{keyii: #1 }
+\define@key{fam}{keyiii}[\usevalue{keyii}]{keyiii: #1 }
+\setkeys{fam}{keyi=test 14}
+\setkeys{fam}{keyii}
+\setkeys{fam}{keyiii}
+
+%% Presetting keys
+
+%% Simple example of the preset system.
+\define@key{fam}{keyi}{keyi: #1 }
+\define@key{fam}{keyii}{keyii: #1 }
+\presetkeys{fam}{keyi=blue}{keyii=\usevalue{keyi}}
+\setkeys{fam}{}\par
+\setkeys{fam}{keyi=red}\par
+\setkeys{fam}{keyii=red}
+\presetkeys{fam}{keyi=red}{}\par
+\setkeys{fam}{keyii=\usevalue{keyi}}
+
+\bye
+\endinput
+%%
+%% End of file `xkvex1.tex'.

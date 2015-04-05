@@ -1,0 +1,356 @@
+%%
+%% This is file `xkvex2.tex',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% xkeyval.dtx  (with options: `xkvex2')
+%% 
+%% ---------------------------------------
+%% Copyright (C) 2004-2006 Hendri Adriaens
+%% ---------------------------------------
+%%
+%% This work may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License, either version 1.3
+%% of this license or (at your option) any later version.
+%% The latest version of this license is in
+%%   http://www.latex-project.org/lppl.txt
+%% and version 1.3 or later is part of all distributions of LaTeX
+%% version 2003/12/01 or later.
+%%
+%% This work has the LPPL maintenance status "maintained".
+%%
+%% This Current Maintainer of this work is Hendri Adriaens.
+%%
+%% This work consists of the file xkeyval.dtx and derived files
+%% keyval.tex, xkvtxhdr.tex, xkeyval.sty, xkeyval.tex, xkvview.sty,
+%% xkvltxp.sty, pst-xkey.tex, pst-xkey.sty, xkveca.cls, xkvecb.cls,
+%% xkvesa.sty, xkvesb.sty, xkvesc.sty, xkvex1.tex, xkvex2.tex,
+%% xkvex3.tex and xkvex4.tex.
+%%
+%% The following files constitute the xkeyval bundle and must be
+%% distributed as a whole: readme, xkeyval.pdf, keyval.tex,
+%% pst-xkey.sty, pst-xkey.tex, xkeyval.sty, xkeyval.tex, xkvview.sty,
+%% xkvltxp.sty, xkvtxhdr.tex, pst-xkey.dtx and xkeyval.dtx.
+%%
+\documentclass{article}
+\usepackage{xkeyval}
+\usepackage{xcolor,calc}
+
+%% Example of setting keyval options using xkeyval
+\usepackage{hyperref}
+\usepackage{helvet}
+\setkeys{Hyp,Hel}{colorlinks,urlcolor=green,scaled=.85}
+
+\title{\textsf{xkeyval} package\\\normalsize\emph{Example 2}}
+\author{Hendri Adriaens}
+\setlength{\parindent}{0cm}
+
+\makeatletter
+
+\begin{document}
+\maketitle
+
+This example demonstrates the use of the new macros for setting
+keys of the \textsf{xkeyval} package. Below each piece of verbatim
+code, you can find its output.
+
+\section{Simple operations}
+
+Define keys.
+\begin{verbatim}
+\define@key{fami}{keyi}{key 1: #1\space}
+\define@key{famii}{keyii}{key 2: #1\space}
+\define@key{famiii}{keyiii}[test 2]{key 3: #1\space}
+\define@key{famiv}{keyi}{key 4: #1\space}
+\end{verbatim}
+\define@key{fami}{keyi}{key 1: #1\space}
+\define@key{famii}{keyii}{key 2: #1\space}
+\define@key{famiii}{keyiii}[test 2]{key 3: #1\space}
+\define@key{famiv}{keyi}{key 4: #1\space}
+
+Set keys from multiple families.
+\begin{verbatim}
+\setkeys{fami,famii,famiii}{keyi=test 1,keyiii}
+\end{verbatim}
+\begin{itemize}
+\item[$\Rightarrow$]
+\setkeys{fami,famii,famiii}{keyi=test 1,keyiii}
+\end{itemize}
+
+Multiplely defined keys will be taken from the first family on the
+list that defines the key. When \verb|+| is used, all families
+defining the key will set it.
+\begin{verbatim}
+\setkeys{fami,famiv}{keyi=test 3}
+\setkeys{famiv,fami}{keyi=test 4}
+\setkeys+{fami,famiv}{keyi=test 5}
+\end{verbatim}
+\begin{itemize}
+\item[$\Rightarrow$]
+\setkeys{fami,famiv}{keyi=test 3}\par
+\setkeys{famiv,fami}{keyi=test 4}\par
+\setkeys+{fami,famiv}{keyi=test 5}
+\end{itemize}
+
+Starred form sets keys that it can find in the families specified.
+Keys that cannot be located will be put onto a list for later use
+by \verb+\setrmkeys+.
+\begin{verbatim}
+\setkeys*{famiv}{keyi=test 9,keyii=\url{http://www.test10.com},
+  keyiii=this key has been set on page \thepage}
+\end{verbatim}
+\begin{itemize}
+\item[$\Rightarrow$]
+\setkeys*{famiv}{keyi=test 9,keyii=\url{http://www.test10.com},
+  keyiii=this key has been set on page \thepage}
+\end{itemize}
+
+Try to set the remaining keys from the previous step. The starred
+version defines a new list in case there are still keys that
+cannot be located in the given families. The command below does
+not do anything since the \verb+keyi+ key has already been taken
+from family \verb+famiv+ above.
+\begin{verbatim}
+\setrmkeys*{fami}
+\end{verbatim}
+\setrmkeys*{fami}\par
+
+The normal version will complain (as \verb+\setkeys+) when it
+cannot locate a key which was previously submitted to
+\verb+\setkeys+ and hasn't been set yet by previous commands.
+\textsf{xkeyval} commands can also be used to set \textsf{keyval}
+options as is done to the color of the url created with the
+\textsf{hyperref} package and the scaling of the font used for
+`\textsf{xkeyval}' with the \textsf{helvet} package. (See the
+preamble of the example for the code).
+\begin{verbatim}
+\setrmkeys{famii,famiii}
+\end{verbatim}
+\begin{itemize}
+\item[$\Rightarrow$]
+\setrmkeys{famii,famiii}
+\end{itemize}
+
+Set keys, excluding some keys.
+\begin{verbatim}
+\setkeys{fami,famii,famiii}[keyi,keyiii]{keyi=test 6,keyii=test 7,keyiii=test 8}
+\end{verbatim}
+\begin{itemize}
+\item[$\Rightarrow$]
+\setkeys{fami,famii,famiii}[keyi,keyiii]{keyi=test 6,keyii=test 7,keyiii=test 8}
+\end{itemize}
+
+Test whether a key is defined in a family from the list.
+\begin{verbatim}
+\key@ifundefined{fami,famii}{keyiii}
+{keyiii is not defined in family `fami' or `famii'}
+{keyiii is defined in family `fami' or `famii'}
+\end{verbatim}
+\begin{itemize}
+\item[$\Rightarrow$]
+\key@ifundefined{fami,famii}{keyiii}
+{keyiii is not defined in family `fami' or `famii'}
+{keyiii is defined in family `fami' or `famii'}
+\end{itemize}
+
+Define some keys and macros.
+\begin{verbatim}
+\define@cmdkey[my]{fama}[my@]{keya}[none]{}
+\define@choicekey[my]{fama}{keyb}{a,b,c}[b]{correct input: #1}
+\define@boolkey[my]{famb}{keyc}[true]{}
+\def\testa{\setkeys[my]{fama}}
+\def\testb{\setkeys[my]{famb}}
+\def\testset{\setkeys[my]{fama,famb}}
+\end{verbatim}
+\define@cmdkey[my]{fama}[my@]{keya}[none]{}
+\define@choicekey[my]{fama}{keyb}{a,b,c}[b]{correct input: #1}
+\define@boolkey[my]{famb}{keyc}[true]{}
+\def\testa{\setkeys[my]{fama}}
+\def\testb{\setkeys[my]{famb}}
+\def\testset{\setkeys[my]{fama,famb}}
+Now \verb+\testa+ can only set \verb+keya+, \verb+\testb+ can only
+set \verb+keyb+ and \verb+\testset+ can set both.
+\begin{verbatim}
+\testa{keya}
+  \my@keya\
+\testa{keyb}
+\testb{keyc}
+  \ifmy@famb@keyc true \else false \fi
+\testset{keya=test 11,keyb=c,keyc=false}
+  \my@keya\space
+  \ifmy@famb@keyc true \else false \fi
+\end{verbatim}
+\begin{itemize}
+\item[$\Rightarrow$]
+\testa{keya}
+  \my@keya\
+\testa{keyb}
+\testb{keyc}
+  \ifmy@famb@keyc true \else false \fi
+\testset{keya=test 11,keyb=c,keyc=false}
+  \my@keya\space
+  \ifmy@famb@keyc true \else false \fi
+\end{itemize}
+
+\section{Pointers and values}
+
+First we (re)define some keys.
+\begin{verbatim}
+\define@key{fam}{keyi}{key 1: #1 }
+\define@key{fam}{keyii}{key 2: #1 }
+\define@key{fam}{keyiii}[test 2]{key 3: #1 }
+\end{verbatim}
+\define@key{fam}{keyi}{key 1: #1 }
+\define@key{fam}{keyii}{key 2: #1 }
+\define@key{fam}{keyiii}[test 2]{key 3: #1 }
+
+Pointers can be used to copy the value of other keys in the same
+family. This can be done in two ways. The first example shows `on
+the spot' value saving.
+\begin{verbatim}
+\setkeys{fam}{\savevalue{keyi}=test 12,\savevalue{keyii}=\usevalue{keyi}}
+\setkeys{fam}{keyiii=\usevalue{keyii}}
+\end{verbatim}
+\begin{itemize}
+\item[$\Rightarrow$]
+\setkeys{fam}{\savevalue{keyi}=test 12,\savevalue{keyii}=\usevalue{keyi}}
+\setkeys{fam}{keyiii=\usevalue{keyii}}
+\end{itemize}
+
+However, you can also predefine the keys to be saved for the entire
+document with a single command. Note that we force keys to be saved
+globally. This is necessary here since the commands in the source of
+this document appear in an environment.
+\begin{verbatim}
+\savekeys{fam}{\global{keyi},\global{keyii}}
+\setkeys{fam}{keyi=test 13,keyii=\usevalue{keyi}}
+\setkeys{fam}{keyiii=\usevalue{keyii}}
+\end{verbatim}
+\begin{itemize}
+\item[$\Rightarrow$]
+\savekeys{fam}{\global{keyi},\global{keyii}}
+\setkeys{fam}{keyi=test 13,keyii=\usevalue{keyi}}
+\setkeys{fam}{keyiii=\usevalue{keyii}}
+\end{itemize}
+
+Pointers can be used in default values as well. Remember that the
+previous example used \verb+\savekeys+ for \verb+keyi+ and \verb+keyii+.
+\begin{verbatim}
+\define@key{fam}{keyi}{keyi: #1 }
+\define@key{fam}{keyii}[\usevalue{keyi}]{keyii: #1 }
+\define@key{fam}{keyiii}[\usevalue{keyii}]{keyiii: #1 }
+\setkeys{fam}{keyi=test 14}
+\setkeys{fam}{keyii}
+\setkeys{fam}{keyiii}
+\end{verbatim}
+\begin{itemize}
+\item[$\Rightarrow$]
+\define@key{fam}{keyi}{keyi: #1 }
+\define@key{fam}{keyii}[\usevalue{keyi}]{keyii: #1 }
+\define@key{fam}{keyiii}[\usevalue{keyii}]{keyiii: #1 }
+\setkeys{fam}{keyi=test 14}
+\setkeys{fam}{keyii}
+\setkeys{fam}{keyiii}
+\end{itemize}
+
+\section{Presetting keys}
+
+Simple example of the preset system.
+\begin{verbatim}
+\define@key{fam}{keyi}{keyi: #1 }
+\define@key{fam}{keyii}{keyii: #1 }
+\presetkeys{fam}{keyi=blue}{keyii=\usevalue{keyi}}
+\setkeys{fam}{}\par
+\setkeys{fam}{keyi=red}\par
+\setkeys{fam}{keyii=red}
+\presetkeys{fam}{keyi=red}{}
+\setkeys{fam}{keyii=\usevalue{keyi}}
+\end{verbatim}
+\begin{itemize}
+\item[$\Rightarrow$]
+\define@key{fam}{keyi}{keyi: #1 }
+\define@key{fam}{keyii}{keyii: #1 }
+\presetkeys{fam}{keyi=blue}{keyii=\usevalue{keyi}}
+\setkeys{fam}{}\par
+\setkeys{fam}{keyi=red}\par
+\setkeys{fam}{keyii=red}
+\presetkeys{fam}{keyi=red}{}\par
+\setkeys{fam}{keyii=\usevalue{keyi}}
+\end{itemize}
+
+\section{Application of pointers, values and presets}
+
+\setkeys{Hyp}{urlcolor=black}
+More complicated example of the preset
+system and pointer system. See for more information about this
+example the
+\textsf{xkeyval} article on\par
+\url{http://stuwww.uvt.nl/~hendri/downloads/xkeyval.html}.
+\begin{verbatim}
+\newdimen\shadowsize
+\define@boolkey{Fbox}{frame}[true]{}
+\define@boolkey{Fbox}{shadow}[true]{}
+\define@key{Fbox}{framecolor}{\def\Fboxframecolor{#1}}
+\define@key{Fbox}{shadowcolor}{\def\Fboxshadowcolor{#1}}
+\define@key{Fbox}{framesize}{\setlength\fboxrule{#1}}
+\define@key{Fbox}{shadowsize}{\setlength\shadowsize{#1}}
+\presetkeys{Fbox}{frame,framecolor=red,framesize=0.5pt}%
+ {shadow=\usevalue{frame},shadowcolor=\usevalue{framecolor}!40,%
+  shadowsize=\usevalue{framesize}*4}
+\savekeys{Fbox}{frame,framecolor,framesize}
+\newcommand*\Fbox[2][]{%
+ \setkeys{Fbox}{#1}%
+ {\ifKV@Fbox@frame\else\fboxrule0pt\fi
+  \ifKV@Fbox@shadow\else\shadowsize0pt\fi
+  \sbox0{\fcolorbox{\Fboxframecolor}{white}{#2}}%
+  \hskip\shadowsize
+  \color{\Fboxshadowcolor}%
+  \rule[-\dp0]{\wd0}{\ht0+\dp0}%
+  \llap{\raisebox{\shadowsize}%
+   {\box0\hskip\shadowsize}}}%
+}
+\Fbox{demo1}
+\Fbox[framecolor=blue]{demo2}
+\Fbox[shadow=false]{demo3}
+\Fbox[framesize=1pt]{demo4}
+\Fbox[frame=false,shadow]{demo5}
+\end{verbatim}
+\newdimen\shadowsize
+\define@boolkey{Fbox}{frame}[true]{}
+\define@boolkey{Fbox}{shadow}[true]{}
+\define@key{Fbox}{framecolor}%
+ {\def\Fboxframecolor{#1}}
+\define@key{Fbox}{shadowcolor}%
+ {\def\Fboxshadowcolor{#1}}
+\define@key{Fbox}{framesize}%
+ {\setlength\fboxrule{#1}}
+\define@key{Fbox}{shadowsize}%
+ {\setlength\shadowsize{#1}}
+\presetkeys{Fbox}%
+ {frame,framecolor=red,framesize=0.5pt}%
+ {shadow=\usevalue{frame},
+  shadowcolor=\usevalue{framecolor}!40,
+  shadowsize=\usevalue{framesize}*4}
+\savekeys{Fbox}{frame,framecolor,framesize}
+\newcommand*\Fbox[2][]{%
+ \setkeys{Fbox}{#1}%
+ {\ifKV@Fbox@frame\else\fboxrule0pt\fi
+  \ifKV@Fbox@shadow\else\shadowsize0pt\fi
+  \sbox0{\fcolorbox{\Fboxframecolor}{white}{#2}}%
+  \hskip\shadowsize
+  \color{\Fboxshadowcolor}%
+  \rule[-\dp0]{\wd0}{\ht0+\dp0}%
+  \llap{\raisebox{\shadowsize}%
+   {\box0\hskip\shadowsize}}}%
+}
+\Fbox{demo1}
+\Fbox[framecolor=blue]{demo2}
+\Fbox[shadow=false]{demo3}
+\Fbox[framesize=1pt]{demo4}
+\Fbox[frame=false,shadow]{demo5}
+
+\end{document}
+\endinput
+%%
+%% End of file `xkvex2.tex'.
