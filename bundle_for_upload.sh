@@ -3,6 +3,7 @@
 mkdir beamerposter
 cp README.md beamerposter.tex beamerposter.sty examples/00/example.tex beamerposter
 cd beamerposter
+mv README.md README
 pdflatex beamerposter
 rm beamerposter.aux beamerposter.log 
 cd ..

@@ -17,16 +17,15 @@ The package allows you to benefit from the nice color box handling and alignment
 
 ### LaTeX requirements:
 
- * [beamer class](http://bitbucket.org/rivanvx/beamer/downloads) (all examples with beamer v.3.07 - Note: with beamer 3.10 do NOT use option hyperref={pdfpagelabels=false})
- * [fp package](http://www.ctan.org/tex-archive/macros/latex/contrib/fp/)
- * [xkeyval package](http://tug.ctan.org/tex-archive/macros/latex/contrib/xkeyval/) (in a version supporting choice keys, e.g. v2.5f)
- * [type1cm package](http://tug.ctan.org/tex-archive/macros/latex/contrib/type1cm/) for scalable and huge math fonts
- * [paralist package](http://www.ctan.org/tex-archive/macros/latex/contrib/paralist/)
+ * [beamer class](http://www.ctan.org/pkg/beamer) (all examples with beamer v.3.07 - Note: with beamer 3.10 do NOT use option hyperref={pdfpagelabels=false})
+ * [fp package](http://www.ctan.org/pkg/fp)
+ * [xkeyval package](http://www.ctan.org/pkg/xkeyval) (in a version supporting choice keys, e.g. v2.5f)
+ * [type1cm package](http://www.ctan.org/pkg/type1cm) for scalable and huge math fonts
+ * [paralist package](http://www.ctan.org/pkg/paralist)
 
-The beamerposter package is available from CTAN (currently in an outdated version):
+The beamerposter package is available from CTAN:
 
- * CTAN release: http://tug.ctan.org/cgi-bin/ctanPackageInformation.py?id=beamerposter
- * see also http://tug.ctan.org/tex-archive/macros/latex/contrib/beamerposter/
+ * CTAN release: http://www.ctan.org/pkg/beamerposter
 
 We received so many congratulations and also interesting questions about the beamerposter package that we created a [beamerposter googlegroup](http://groups.google.com/group/beamerposter). Feel free to post your questions, source files, templates, or new style files there.
 
