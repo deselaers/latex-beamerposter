@@ -1,0 +1,51 @@
+\documentclass[pagesize=auto]{scrartcl}
+
+\addtokomafont{title}{\rmfamily}
+
+\title{The \textsf{beamerposter} package}
+\author{Philippe Dreuw}
+\date{2008/03/11}
+
+
+\begin{document}
+
+\maketitle
+
+\noindent
+The \LaTeX\ \textsf{beamerposter} package is an extension of the \LaTeX\ \textsf{beamer} and the  
+\textsf{a0poster} classes in order to create \LaTeX\ posters, e.\,g.\ a DIN--A0 size \LaTeX\ % 
+poster in landscape or portrait orientation. Furthermore it is possible 
+to scale the poster fonts to your needs. 
+
+The package allows you to benefit from the nice color box handling and 
+alignment in the \textsf{beamer} class (e.\,g.\ with rounded corners and shadows) 
+in order to create quite fast pretty conference posters.
+
+
+\minisec{Features:}
+%
+\begin{itemize}
+\item scalable fonts using the \textsf{fp} and \textsf{type1cm} packages
+\item posters in DIN--A0, DIN--A1, DIN--A2, DIN--A3, DIN--A4, and custom sizes 
+  like double DIN--A0 possible
+\item still applicable to custom beamer slides, e.\,g.\ 16:9 slides for a 
+  widescreen (i.\,e.\ 1.78 aspect ratio)
+\item orientation: landscape or portrait
+\item debug mode
+\end{itemize}
+
+
+\minisec{ChangeLog:}
+%
+\begin{labeling}[\hspace{\labelsep}--]{1.07}
+\item[1.07] bugfixed custom size handling, portrait or landscape settings are ignored now
+\item[1.06] added the \textsf{type1cm} package for scalable math fonts
+\item[1.05] added version check for \textsf{xkeyval} package
+\item[1.04] added custom size handling
+\item[1.03] improved predefined size handling
+\item[1.02] minor bugfixes
+\item[1.01] bugfixed size handling
+\item[1.00] first \textsf{beamerposter} release
+\end{labeling}
+
+\end{document}
