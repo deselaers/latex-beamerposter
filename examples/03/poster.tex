@@ -1,0 +1,152 @@
+\documentclass{beamer}
+\usepackage[orientation=portrait,size=a0,scale=1.4,debug]{beamerposter}
+\mode<presentation>{\usetheme{ZH}}
+\usepackage{chemformula}
+\usepackage[utf8]{inputenc}
+\usepackage[german, english]{babel} % required for rendering German special characters
+\usepackage{siunitx} %pretty measurement unit rendering
+\usepackage{hyperref} %enable hyperlink for urls
+\usepackage{ragged2e}
+
+\usepackage{array,booktabs,tabularx}
+\newcolumntype{Z}{>{\centering\arraybackslash}X} % centered tabularx columns
+
+\setbeamertemplate{caption}[numbered]{}% Number float-like environments
+
+\title{\huge Opto-fMRI of Monoaminergic Systems and Psychotropic Drugs}
+\author{Horea-Ioan Ioanas, Bechara Saab, Markus Rudin}
+\institute[ETH and University of Zurich]{Institute for Biomedical Engineering, ETH and University of Zurich}
+\date{\today}
+
+\newlength{\columnheight}
+\setlength{\columnheight}{105cm}
+
+\begin{document}
+\begin{frame}
+\begin{columns}
+	\begin{column}{.43\textwidth}
+		\begin{beamercolorbox}[center,wd=\textwidth]{postercolumn}
+			\begin{minipage}[T]{.95\textwidth}  % tweaks the width, makes a new \textwidth
+				\parbox[t][\columnheight]{\textwidth}{ % must be some better way to set the the height, width and textwidth simultaneously
+					\begin{myblock}{Introduction}
+						\textbf{THIS IS NOT THE ORIGINAL DOCUMENT, and was produced from a modified static source, in order to guarantee portability. The original source is available \textcolor{red}{\href{https://bitbucket.org/TheChymera/znz_poster/src}{on bitbucket}}, and makes extensive use of PythonTeX. This also means you can expect PythonTeX to work nicely with this package and theme.}
+
+						Monoaminergic systems are ensembles of neurons defined by the primary production of monoamine neurotransmitters (most prominently serotonin, dopamine, and noradrenaline).
+						\begin{itemize}
+							\item Their wide-spread projections have implicated them in numerous neuropsychiatric disorders (e.g. depression, anxiety, addiction, and schizophrenia).
+							\item Their relevance to the control of neuronal function has made them targets of many therapeutic drugs (e.g. monoamine reuptake inhibitors) and drugs of abuse (e.g. amphetamines).
+							\item A high degree of evolutionary conservation makes them excellent candidates for translational research in rodents.
+						\end{itemize}
+						The current project aims to establish opto-fMRI as an assay for monoaminergic systems.
+						This assay will help ellucidate the functional mechanisms of psychotropic drugs, and facillitate the establishment of functional connectivity and inter-connectivity models for these most pervasive neuronal systems.
+						\vspace{0.4em}
+						\begin{figure}
+							\begin{minipage}{0.43\textwidth}
+								\centering\includegraphics[width=0.85\textwidth]{img/mas.png}
+								\caption{Serotonergic (green), dopaminergic (red), and noradrenergic (blue) nuclei and significant projections \cite{Paivi}}
+							\end{minipage}
+							\begin{minipage}{0.45\textwidth}
+								\centering\includegraphics[width=1\textwidth]{img/drn_mr_p.png}
+								\caption{Ascending serotonergic projections alone innervate the majority of cortical and subcortical areas \cite{Oegren2008}}
+							\end{minipage}
+						\end{figure}
+					\end{myblock}\vfill
+					\begin{myblock}{Chronic Serotonin Reuptake Inhibition}
+						Selective Serotonin Reuptake Inhibitors (SSRI) are used in the treatment of depression, and have differing acute (e.g. stimulant and anxiogenic) and chronic (antidepressant and anxiolytic) effects - with the neuronal mechanism of the latter still being widely debated.
+						Possible explanations include the down-regulation of either the serotonin transporter protein (SERT), and/or serotonergic autoreceptors (5-HT$_1$A).
+						We are administering fluoxetine both chronically and acutely to a number of animals prepared for opto-fMRI; we present the timetable of the first cohort in figure~\ref{fig:tt}.
+						\begin{figure}
+							\begin{minipage}{0.94\textwidth}
+								\centering\includegraphics[width=0.9\textwidth]{img/dm.png}
+								\caption{Band-pass filtered pulse-train-resolved first-level design model, with pulse trains represented in cyan.}
+								\label{fig:stim}
+							\end{minipage}
+						\end{figure}
+						\begin{itemize}
+							\item Opto-fMRI can be used to analyze chronic SSRI effects on serotonergic neurotransmission - by modelling the effect of treatment on individual pulse trains, or the interaction effect of treatment and pulse train number on series of pulse trains (as seen in figure~\ref{fig:stim}).
+						 	\item The large-scale readout capacity of opto-fMRI can also detect whether there are regionally varying effects of chronic SSRI administration (and consequently allow a functional characterization of neuronal subpopulations of the dorsal raphe).
+						\end{itemize}
+						\begin{figure}
+							\begin{minipage}{0.94\textwidth}
+								\centering\includegraphics[width=0.9\textwidth]{img/tt.png}
+								\caption{Animal cohort treatment and measurement timetable. Opto-fMRI scan dates are tinted turquoise. Treatment-free days are shaded light gray, chronic (i.p.) fluoxetine administration days medium gray, and acute (i.v.) fluoxetine administration days dark gray.}
+								\label{fig:tt}
+							\end{minipage}
+						\end{figure}
+					\end{myblock}\vfill
+		}\end{minipage}\end{beamercolorbox}
+	\end{column}
+	\begin{column}{.57\textwidth}
+		\begin{beamercolorbox}[center,wd=\textwidth]{postercolumn}
+			\begin{minipage}[T]{.95\textwidth} % tweaks the width, makes a new \textwidth
+				\parbox[t][\columnheight]{\textwidth}{ % must be some better way to set the the height, width and textwidth simultaneously
+					\begin{myblock}{Methods}
+						Optogenetic stimulation requires a number of preliminary procedures, including the breeding of genetically modified mice, the targeted infusion of a light-gated protein (ChR2) expressing viral vector, and the targeted implant of a durable optic fiber ferrule.
+						\vspace{0.2em}
+						\begin{figure}
+							\begin{minipage}{.94\textwidth}
+								\centering\includegraphics[width=\textwidth]{img/og.png}
+								\caption{\textbf{(a)} Optic fiber implant targeted at the serotonergic dorsal raphe (DR); histological validation of the ChR2 construct expression: \textbf{(b)} localized to the DR  and \textbf{(c)} colocalized with serotonin. Data from Saab and colleagues, unpublished.}
+							\end{minipage}
+						\end{figure}
+						\vspace{0.4em}
+						For robust genotyping we have designed 2 multiplex-compatible primer pairs for the Cre recombinase (transgene construct) and GAPDH (positive control).
+						These are listed below, alongside a genotyping assay featuring 3 controls (water, known transgene, and known wildtype - on the first, second-to-last and last non-ladder lanes respectively):
+						\vspace{0.1em}
+						\begin{figure}
+							\begin{minipage}{.45\textwidth}
+								\scriptsize
+								\begin{tabular}{@{} p{.1\linewidth} r r @{}}
+									\toprule
+									Direction  &      \multicolumn{2}{c @{}}{Target Construct}      \\
+									\cmidrule(l){2-3}
+									&   Cre       & GAPDH  \\
+									\cmidrule(lr){1-3}
+									fw     &   \texttt{ACCAGCCAGCTATCAACTCG}          & \texttt{CTCCATTTCCCCTGTTCTCC}    \\
+									rv &   \texttt{TTGCCCCTGTTTCACTATCC}         & \texttt{GAGACCTGAATGCTGCTTCC}    \\
+									\bottomrule
+								\end{tabular}
+							\end{minipage}
+							\begin{minipage}{.45\textwidth}
+								\centering\includegraphics[width=0.95\textwidth]{img/ag1}
+							\end{minipage}
+						\end{figure}
+						\vspace{1em}
+						To facillitate multimodal and exploratory data analysis, LabbookDB - a relational database structure - was developed to replace the common lab book and integrate metadata directly with analysis tools.
+						In order to facilitate rapid, cheap, and flexible access to the high computing power needed for exploratory fMRI analysis, a cloud-computing GNU/Linux image, NeuroGentoo was created;
+						and populated with a multitude of neuroimaging package atoms.
+						\vspace{0.2em}
+						\begin{figure}
+							\begin{minipage}{0.43\textwidth}
+								\centering\includegraphics[width=0.6\textwidth]{img/ng_large.png}
+								\caption{NeuroGentoo Logo; for the software repository see: \href{https://github.com/TheChymera/neurogentoo}{github.com/TheChymera/neurogentoo}}
+							\end{minipage}
+							\begin{minipage}{0.03\textwidth}
+							\end{minipage}
+							\begin{minipage}{0.45\textwidth}
+								\centering\includegraphics[width=0.34\textwidth]{img/db.png}
+								\caption{Generic DB logo (\href{https://creativecommons.org/licenses/by-nc-sa/3.0/}{CC BY-NC-SA Barry Mieny}); for the software package see: \href{https://github.com/TheChymera/labbookdb}{github.com/TheChymera/labbookdb}}
+							\end{minipage}
+						\end{figure}
+					\end{myblock}\vfill
+					\begin{myblock}{Acute Fluoxetine Effects}
+						Preliminary results from the comparison of the first two measurement sessions (as seen in figure~\ref{fig:tt}) indicate that the uncorrected response to optogenetic stimulation across all trains (depicted individually in figure~\ref{fig:stim}) is stronger and more widespread immediately after acute fluoxetine administration than in the drug-naive mouse.
+						It is important to note that the results seen in figure~\ref{fig:fail} need further statistical ellaboration.
+						\begin{figure}
+							\begin{minipage}{0.85\textwidth}
+								\centering\includegraphics[width=0.75\textwidth]{img/fail.png}
+								\caption{Contrast for all stimulation train parameter estimates for the pre-drug-administration session (red) and the acute fluoxetine administration session (green). Note the considerably different scales.}
+								\label{fig:fail}
+							\end{minipage}
+						\end{figure}
+					\end{myblock}\vfill
+					\begin{myblock}{References}
+						\footnotesize
+						\bibliographystyle{abbrv}
+						\bibliography{./bib}
+					\end{myblock}\vfill
+		}\end{minipage}\end{beamercolorbox}
+	\end{column}
+\end{columns}
+\end{frame}
+\end{document}
