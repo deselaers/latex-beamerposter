@@ -7,7 +7,7 @@
 \definecolor{ETH3}{RGB}{0,105,180}
 \definecolor{ETH6}{RGB}{111,111,110}
 \definecolor{ETH8}{RGB}{0,122,146}
-\definecolor{ETH10}{RGB}{150,210,44} %hacked it a bit as it was not light enough
+\definecolor{ETH10}{RGB}{130,190,30} %hacked it a bit as it was not light enough
 \definecolor{tlg}{RGB}{240,240,240}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -16,7 +16,7 @@
 
 \setbeamercolor{headline}{fg=red,bg=ETH3}
 \setbeamercolor{footline}{fg=red, bg=red}
-\setbeamerfont{footline}{size=\large,series=\tt}
+\setbeamerfont{footline}{size=\large,series=\bf}
 \setbeamercolor{separation line}{bg=ETH3}
 \setbeamercolor{title in headline}{fg=white}
 \setbeamercolor{author in headline}{fg=white}
@@ -28,7 +28,7 @@
 
 \setbeamercolor*{normal text}{fg=ETH6, bg=tlg}
 \setbeamercolor*{block body}{fg=black, bg=white}
-\setbeamercolor*{block title}{fg=ETH10,bg=ETH1}
+\setbeamercolor*{block title}{fg=black,bg=ETH10}
 \setbeamerfont{block title}{size=\large,series=\bf}
 \setbeamercolor{upper separation line head}{fg=red}
 
@@ -55,15 +55,17 @@
 % We preferentially use the above but keep this one just-in-case
 \setbeamertemplate{block begin}{
   % \vskip.75ex
-  \begin{beamercolorbox}[ht=2.25ex,dp=1ex,center,rounded=true,shadow=true,leftskip=1cm,colsep*=0ex]{block title}%
+  \begin{beamercolorbox}[ht=2.8ex,dp=1.2ex,center,rounded=false,shadow=false,leftskip=1cm,colsep*=0ex]{block title}%
     \usebeamerfont*{block title}\centering \insertblocktitle
   \end{beamercolorbox}%
   {\ifbeamercolorempty[bg]{block body}{}{\nointerlineskip\vskip-0.5pt}}%
   \usebeamerfont{block body}%
-  \begin{beamercolorbox}[rounded=true,shadow=true]{block body}%
+  \begin{beamercolorbox}[rounded=false,shadow=false,center,wd=\textwidth,]{block body}%
     \ifbeamercolorempty[bg]{block body}\vbox{}%
+  \begin{minipage}{0.96\textwidth}\vbox{}%
   \justify}
   \setbeamertemplate{block end}{
+  \end{minipage}
   \end{beamercolorbox}
 }
 
@@ -114,7 +116,7 @@
 
   \leavevmode%
   \begin{beamercolorbox}[ht=4ex,leftskip=1cm,rightskip=1cm]{author in head/foot}%
-    \url{http://www.aic-fmi.ethz.ch}
+    \href{http://www.aic-fmi.ethz.ch}{www.aic-fmi.ethz.ch}
     \hfill
     \today
     \hfill
@@ -129,7 +131,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Display a grid to help align images ... and it looks nice with this color scheme
-\beamertemplategridbackground[1cm]
+% \beamertemplategridbackground[1cm]
 
 %Some beamer customizations:
 \setbeamertemplate{bibliography item}[text]
