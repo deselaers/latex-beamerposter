@@ -7,14 +7,14 @@
 \definecolor{ETH3}{RGB}{0,105,180}
 \definecolor{ETH6}{RGB}{111,111,110}
 \definecolor{ETH8}{RGB}{0,122,146}
-\definecolor{ETH10}{RGB}{130,190,30} %hacked it a bit as it was not light enough
-\definecolor{tlg}{RGB}{240,240,240}
+\definecolor{ETH10}{RGB}{130,190,30}
+\definecolor{tlg}{RGB}{230,230,230}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %It seems many of the following entries do not control any visible Behaviour. All such entries are
 %set to red, so that they are easy to spot if they ever become visible
 
-\setbeamercolor{headline}{fg=red,bg=ETH3}
+\setbeamercolor{headline}{fg=red,bg=ETH3} % This is the recommended color for Specialist community usage: change to ETH1 for general communication
 \setbeamercolor{footline}{fg=red, bg=red}
 \setbeamerfont{footline}{size=\large,series=\bf}
 \setbeamercolor{separation line}{bg=ETH3}
@@ -54,11 +54,12 @@
 % !!! This environment can't both have nice margins AND display the contained text as justified:
 % We preferentially use the above but keep this one just-in-case
 \setbeamertemplate{block begin}{
-  % \vskip.75ex
-  \begin{beamercolorbox}[ht=2.8ex,dp=1.2ex,center,rounded=false,shadow=false,leftskip=1cm,colsep*=0ex]{block title}%
+\setlength{\mylength}{\textwidth+2ex}%
+  \vskip2ex
+  \begin{beamercolorbox}[ht=2.8ex,dp=2ex, wd=\mylength, center,rounded=false,shadow=false,leftskip=1cm,colsep*=0ex]{block title}%
     \usebeamerfont*{block title}\centering \insertblocktitle
-  \end{beamercolorbox}%
-  {\ifbeamercolorempty[bg]{block body}{}{\nointerlineskip\vskip-0.5pt}}%
+  \end{beamercolorbox}\vskip-9pt%
+  {\ifbeamercolorempty[bg]{block body}{}{\nointerlineskip\vskip-0.5ex}}%
   \usebeamerfont{block body}%
   \begin{beamercolorbox}[rounded=false,shadow=false,center,wd=\textwidth,]{block body}%
     \ifbeamercolorempty[bg]{block body}\vbox{}%
@@ -75,13 +76,7 @@
 
   \begin{beamercolorbox}[wd=\paperwidth]{headline}
     \begin{columns}[T]
-      \begin{column}{.02\paperwidth}
-      \end{column}
-      \begin{column}{.07\paperwidth}
-        \begin{center}
-          %\includegraphics[width=.6\linewidth]{logos/i6-hks44}
-        \end{center}
-        \vskip1ex
+      \begin{column}{.09\paperwidth}
       \end{column}
       \begin{column}{.675\paperwidth}
         \vskip4ex
@@ -94,9 +89,9 @@
       \begin{column}{.25\paperwidth}
         \vskip1cm
         \begin{center}
-          \includegraphics[width=.6\linewidth]{img/uni_logo}
+          \includegraphics[width=.6\textwidth]{img/zh_logo}
         \end{center}
-        \vskip1.5cm
+        \vskip-1.5cm
       \end{column}
       \begin{column}{.03\paperwidth}
       \end{column}
@@ -106,6 +101,7 @@
   \begin{beamercolorbox}[wd=\paperwidth]{lower separation line head}
     \rule{0pt}{2pt}
   \end{beamercolorbox}
+  \vskip-2cm
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
