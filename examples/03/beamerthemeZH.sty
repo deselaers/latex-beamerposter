@@ -1,6 +1,9 @@
 % this style was created by Horea Christian and is basted on the ETH Zürich corporate design color palette https://www.ethz.ch/services/en/service/communication/corporate-design/colour.html
 \ProvidesPackage{beamerthemeZH}
 
+\usepackage{calc}
+\newlength{\mylength}
+
 \mode<presentation>
 
 \definecolor{ETH1}{RGB}{31,64,122}
@@ -73,7 +76,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \setbeamertemplate{headline}{
   \leavevmode
-
   \begin{beamercolorbox}[wd=\paperwidth]{headline}
     \begin{columns}[T]
       \begin{column}{.09\paperwidth}
@@ -89,7 +91,7 @@
       \begin{column}{.25\paperwidth}
         \vskip1.5cm
         \begin{center}
-          \includegraphics[width=.8\textwidth, height=.075\textheight, keepaspectratio]{img/zh_logo}
+          \includegraphics[width=.8\textwidth, height=.075\paperheight, keepaspectratio]{img/zh_logo}
         \end{center}
         \vskip-2cm
       \end{column}

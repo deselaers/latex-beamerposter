@@ -7,8 +7,6 @@
 \usepackage{siunitx} %pretty measurement unit rendering
 \usepackage{hyperref} %enable hyperlink for urls
 \usepackage{ragged2e}
-\usepackage{calc}
-\newlength{\mylength}
 
 \usepackage{array,booktabs,tabularx}
 \newcolumntype{Z}{>{\centering\arraybackslash}X} % centered tabularx columns
@@ -18,8 +16,9 @@
 \institute[ETH and University of Zurich]{Institute for Biomedical Engineering, ETH and University of Zurich}
 \date{\today}
 
+% edit this depending on how tall your header is. We should make this scaling automatic :-/
 \newlength{\columnheight}
-\setlength{\columnheight}{105cm}
+\setlength{\columnheight}{103cm}
 
 \begin{document}
 \begin{frame}
