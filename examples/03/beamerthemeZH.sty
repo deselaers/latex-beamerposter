@@ -46,86 +46,87 @@
 \setbeamertemplate{navigation symbols}{}  % no navigation on a poster
 
 \newenvironment<>{myblock}[1]{%
- \begin{actionenv}#2%
- \def\insertblocktitle{\centering#1}%
- \par%
- \usebeamertemplate{block begin}\leftskip=14pt\rightskip=14pt\vspace{10pt}}
- {\par\vspace{10pt}\usebeamertemplate{block end}
- \end{actionenv}}
+	\begin{actionenv}#2%
+	\def\insertblocktitle{\centering#1}%
+	\par%
+	\usebeamertemplate{block begin}\leftskip=14pt\rightskip=14pt\vspace{10pt}}
+	{\par\vspace{10pt}\usebeamertemplate{block end}
+	\end{actionenv}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % !!! This environment can't both have nice margins AND display the contained text as justified:
 % We preferentially use the above but keep this one just-in-case
 \setbeamertemplate{block begin}{
-\setlength{\mylength}{\textwidth+2ex}%
-  \vskip2ex
-  \begin{beamercolorbox}[ht=2.8ex,dp=2ex, wd=\mylength, center,rounded=false,shadow=false,leftskip=1cm,colsep*=0ex]{block title}%
-    \usebeamerfont*{block title}\centering \insertblocktitle
-  \end{beamercolorbox}\vskip-9pt%
-  {\ifbeamercolorempty[bg]{block body}{}{\nointerlineskip\vskip-0.5ex}}%
-  \usebeamerfont{block body}%
-  \begin{beamercolorbox}[rounded=false,shadow=false,center,wd=\textwidth,]{block body}%
-    \ifbeamercolorempty[bg]{block body}\vbox{}%
-  \begin{minipage}{0.96\textwidth}\vbox{}%
-  \justify}
-  \setbeamertemplate{block end}{
-  \end{minipage}
-  \end{beamercolorbox}
-}
+	\setlength{\mylength}{\textwidth+2ex}%
+	\vskip2ex
+	\begin{beamercolorbox}[ht=2.8ex,dp=2ex, wd=\mylength, center,rounded=false,shadow=false,leftskip=1cm,colsep*=0ex]{block title}%
+		\usebeamerfont*{block title}\centering \insertblocktitle
+	\end{beamercolorbox}\vskip-9pt%
+	{\ifbeamercolorempty[bg]{block body}{}{\nointerlineskip\vskip-0.5ex}}%
+	\usebeamerfont{block body}%
+	\begin{beamercolorbox}[rounded=false,shadow=false,center,wd=\textwidth,]{block body}%
+		\ifbeamercolorempty[bg]{block body}\vbox{}%
+		\begin{minipage}{0.96\textwidth}\vbox{}%
+		\justify
+		}
+\setbeamertemplate{block end}{
+	\end{minipage}
+	\end{beamercolorbox}
+	}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \setbeamertemplate{headline}{
-  \leavevmode
-  \begin{beamercolorbox}[wd=\paperwidth]{headline}
-    \begin{columns}[T]
-      \begin{column}{.09\paperwidth}
-      \end{column}
-      \begin{column}{.675\paperwidth}
-        \vskip4ex
-        \raggedleft
-        \usebeamercolor{title in headline}{\color{fg}\textbf{\LARGE{\inserttitle}}\\[1ex]}
-        \usebeamercolor{author in headline}{\color{fg}\large{\insertauthor}\\[1ex]}
-        \usebeamercolor{institute in headline}{\color{fg}\small{\insertinstitute}\\[1ex]}
-        \vskip1ex
-      \end{column}
-      \begin{column}{.25\paperwidth}
-        \vskip1.5cm
-        \begin{center}
-          \includegraphics[width=.8\textwidth, height=.075\paperheight, keepaspectratio]{img/zh_logo}
-        \end{center}
-        \vskip-2cm
-      \end{column}
-      \begin{column}{.03\paperwidth}
-      \end{column}
-    \end{columns}
-  \end{beamercolorbox}
+	\leavevmode
+	\begin{beamercolorbox}[wd=\paperwidth]{headline}
+		\begin{columns}[T]
+			\begin{column}{.09\paperwidth}
+			\end{column}
+			\begin{column}{.675\paperwidth}
+				\vskip4ex
+				\raggedleft
+				\usebeamercolor{title in headline}{\color{fg}\textbf{\LARGE{\inserttitle}}\\[1ex]}
+				\usebeamercolor{author in headline}{\color{fg}\large{\insertauthor}\\[1ex]}
+				\usebeamercolor{institute in headline}{\color{fg}\small{\insertinstitute}\\[1ex]}
+				\vskip1ex
+			\end{column}
+			\begin{column}{.25\paperwidth}
+				\begin{minipage}[c][0.08\paperheight][c]{\linewidth}
+					\vskip1ex
+						\begin{center}
+						\includegraphics[width=.8\textwidth, height=.06\paperheight, keepaspectratio]{img/zh_logo}
+						\end{center}
+				\end{minipage}
+			\end{column}
+			\begin{column}{.03\paperwidth}
+			\end{column}
+		\end{columns}
+	\end{beamercolorbox}
 
-  \begin{beamercolorbox}[wd=\paperwidth]{lower separation line head}
-    \rule{0pt}{2pt}
-  \end{beamercolorbox}
-  \vskip-2cm
-}
+ 	\begin{beamercolorbox}[wd=\paperwidth]{lower separation line head}
+		\rule{0pt}{2pt}
+	\end{beamercolorbox}
+	\vskip-2cm
+	}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \setbeamertemplate{footline}{
-  \begin{beamercolorbox}[wd=\paperwidth]{upper separation line foot}
-    \rule{0pt}{2pt}
-  \end{beamercolorbox}
-
-  \leavevmode%
-  \begin{beamercolorbox}[ht=4ex,leftskip=1cm,rightskip=1cm]{author in head/foot}%
-    \href{http://www.aic-fmi.ethz.ch}{www.aic-fmi.ethz.ch}
-    \hfill
-    \today
-    \hfill
-    \href{mailto:my_address@wikibooks.org}{ioanas@biomed.ee.ethz.ch}
-    \vskip1ex
-  \end{beamercolorbox}
-  \vskip0pt%
-  \begin{beamercolorbox}[wd=\paperwidth]{lower separation line foot}
-    \rule{0pt}{2pt}
-  \end{beamercolorbox}
-}
+	\begin{beamercolorbox}[wd=\paperwidth]{upper separation line foot}
+		\rule{0pt}{2pt}
+	\end{beamercolorbox}
+	\leavevmode%
+	\begin{beamercolorbox}[ht=4ex,leftskip=1cm,rightskip=1cm]{author in head/foot}%
+		\href{http://www.aic-fmi.ethz.ch}{www.aic-fmi.ethz.ch}
+		\hfill
+		\today
+		\hfill
+		\href{mailto:my_address@wikibooks.org}{ioanas@biomed.ee.ethz.ch}
+		\vskip1ex
+	\end{beamercolorbox}
+	\vskip0pt%
+	\begin{beamercolorbox}[wd=\paperwidth]{lower separation line foot}
+		\rule{0pt}{2pt}
+	\end{beamercolorbox}
+	}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Display a grid to help align images ... and it looks nice with this color scheme
