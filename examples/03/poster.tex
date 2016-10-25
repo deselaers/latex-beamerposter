@@ -7,18 +7,20 @@
 \usepackage{siunitx} %pretty measurement unit rendering
 \usepackage{hyperref} %enable hyperlink for urls
 \usepackage{ragged2e}
-
+\usepackage[font=scriptsize,justification=justified]{caption}
 \usepackage{array,booktabs,tabularx}
+
 \newcolumntype{Z}{>{\centering\arraybackslash}X} % centered tabularx columns
+\sisetup{per=frac,fraction=sfrac}
 
 \title{\huge Opto-fMRI of Monoaminergic Systems and Psychotropic Drugs}
-\author{Horea-Ioan Ioanas, Bechara Saab, Markus Rudin}
-\institute[ETH and University of Zurich]{Institute for Biomedical Engineering, ETH and University of Zurich}
+\author{Horea-Ioan Ioanas$^{1,2}$, Bechara Saab$^{2}$, Markus Rudin$^{1}$}
+\institute[ETH]{$^{1}$Institute for Biomedical Engineering, ETH and University of Zurich \\ $^{2}$Preclinical Laboratory for Translational Research into Affective Disorders, DPPP, Psychiatric Hospital, University of Zurich}
 \date{\today}
 
 % edit this depending on how tall your header is. We should make this scaling automatic :-/
 \newlength{\columnheight}
-\setlength{\columnheight}{105cm}
+\setlength{\columnheight}{104cm}
 
 \begin{document}
 \begin{frame}
@@ -44,6 +46,7 @@
 								\centering\includegraphics[width=0.85\textwidth]{img/mas.png}
 								\caption{Serotonergic (green), dopaminergic (red), and noradrenergic (blue) nuclei and significant projections \cite{Paivi}}
 							\end{minipage}
+							\hspace{1em}
 							\begin{minipage}{0.45\textwidth}
 								\centering\includegraphics[width=1\textwidth]{img/drn_mr_p.png}
 								\caption{Ascending serotonergic projections alone innervate the majority of cortical and subcortical areas \cite{Oegren2008}}
@@ -54,6 +57,7 @@
 						Selective Serotonin Reuptake Inhibitors (SSRI) are used in the treatment of depression, and have differing acute (e.g. stimulant and anxiogenic) and chronic (antidepressant and anxiolytic) effects - with the neuronal mechanism of the latter still being widely debated.
 						Possible explanations include the down-regulation of either the serotonin transporter protein (SERT), and/or serotonergic autoreceptors (5-HT$_1$A).
 						We are administering fluoxetine both chronically and acutely to a number of animals prepared for opto-fMRI; we present the timetable of the first cohort in figure~\ref{fig:tt}.
+						\vspace{0.5em}
 						\begin{figure}
 							\begin{minipage}{0.94\textwidth}
 								\centering\includegraphics[width=0.9\textwidth]{img/dm.png}
@@ -65,6 +69,7 @@
 							\item Opto-fMRI can be used to analyze chronic SSRI effects on serotonergic neurotransmission - by modelling the effect of treatment on individual pulse trains, or the interaction effect of treatment and pulse train number on series of pulse trains (as seen in figure~\ref{fig:stim}).
 						 	\item The large-scale readout capacity of opto-fMRI can also detect whether there are regionally varying effects of chronic SSRI administration (and consequently allow a functional characterization of neuronal subpopulations of the dorsal raphe).
 						\end{itemize}
+						\vspace{0.5em}
 						\begin{figure}
 							\begin{minipage}{0.94\textwidth}
 								\centering\includegraphics[width=0.9\textwidth]{img/tt.png}
@@ -114,14 +119,13 @@
 						To facillitate multimodal and exploratory data analysis, LabbookDB - a relational database structure - was developed to replace the common lab book and integrate metadata directly with analysis tools.
 						In order to facilitate rapid, cheap, and flexible access to the high computing power needed for exploratory fMRI analysis, a cloud-computing GNU/Linux image, NeuroGentoo was created;
 						and populated with a multitude of neuroimaging package atoms.
-						\vspace{0.2em}
+						\vspace{0.5em}
 						\begin{figure}
 							\begin{minipage}{0.43\textwidth}
 								\centering\includegraphics[width=0.6\textwidth]{img/ng_large.png}
 								\caption{NeuroGentoo Logo; for the software repository see: \href{https://github.com/TheChymera/neurogentoo}{github.com/TheChymera/neurogentoo}}
 							\end{minipage}
-							\begin{minipage}{0.03\textwidth}
-							\end{minipage}
+							\hspace{1em}
 							\begin{minipage}{0.45\textwidth}
 								\centering\includegraphics[width=0.34\textwidth]{img/db.png}
 								\caption{Generic DB logo (\href{https://creativecommons.org/licenses/by-nc-sa/3.0/}{CC BY-NC-SA Barry Mieny}); for the software package see: \href{https://github.com/TheChymera/labbookdb}{github.com/TheChymera/labbookdb}}
