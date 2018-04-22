@@ -58,43 +58,31 @@
     %a0b
     \edef\paperwidthValue{119}
     \edef\paperheightValue{88}
-    \edef\textwidthValue{116}
-    \edef\textheightValue{88}
     \edef\fontscale{1.0}
     \or
     %a0
     \edef\paperwidthValue{118.9}
     \edef\paperheightValue{84.1}
-    \edef\textwidthValue{117.9}
-    \edef\textheightValue{83.1}
     \edef\fontscale{1.0}
     \or
     %a1
     \edef\paperwidthValue{84.1}
     \edef\paperheightValue{59.4}
-    \edef\textwidthValue{83.1}
-    \edef\textheightValue{58.4}
     \edef\fontscale{0.70710678}    % fontscale=(1/sqrt(2))^1
     \or
     %a2
     \edef\paperwidthValue{59.4}
     \edef\paperheightValue{42.0}
-    \edef\textwidthValue{58.4}
-    \edef\textheightValue{41.0}
     \edef\fontscale{0.5}           % fontscale=(1/sqrt(2))^2
     \or
     %a3
     \edef\paperwidthValue{42.0}
     \edef\paperheightValue{29.7}
-    \edef\textwidthValue{41.0}
-    \edef\textheightValue{28.7}
     \edef\fontscale{0.35355339}    % fontscale=(1/sqrt(2))^3
     \or
     %a4
     \edef\paperwidthValue{29.7}
     \edef\paperheightValue{21.0}
-    \edef\textwidthValue{28.7}
-    \edef\textheightValue{20.0}
     \edef\fontscale{0.25}          % fontscale=(1/sqrt(2))^4
     \or
     \@beamerposter@customsizetrue
@@ -137,31 +125,30 @@
 %% normalize scale depending on poster size
 \FPupn{\myfontscale}{myfontscale fontscale * 2 round}
 
-%% swap sizes for portrait orientation
+%% overwrite dimensions if custom size
+\if@beamerposter@customsize
+  \edef\paperheightValue{\customheight}
+  \edef\paperwidthValue{\customwidth}
+\fi
+
+%% Set paper{height,width}
+%%% If portrait orientation, swap height and width
 \if@beamerposter@portrait
   \newdimen\tmp
   \setlength{\tmp}{\paperwidthValue cm}
-  \setlength{\paperwidth}{\paperheightValue cm}
   \setlength{\paperheight}{\tmp}
-  \setlength{\tmp}{\textwidthValue cm}
-  \setlength{\textwidth}{\textheightValue cm}
-  \setlength{\textheight}{\tmp}
+  \setlength{\paperwidth}{\paperheightValue cm}
+%%% Otherwise assign height and width directly
 \else
-  \setlength{\paperwidth}{\paperwidthValue cm}
   \setlength{\paperheight}{\paperheightValue cm}
-  \setlength{\textwidth}{\textwidthValue cm}
-  \setlength{\textheight}{\textheightValue cm}
+  \setlength{\paperwidth}{\paperwidthValue cm}
 \fi
 
-%% overwrite dimensions if custom size
-\if@beamerposter@customsize
-  \setlength{\paperwidth}{\customwidth cm}
-  \setlength{\paperheight}{\customheight cm}
-  \FPupn{\resulttextwidth}{1 customwidth  -}
-  \FPupn{\resulttextheight}{1 customheight -}
-  \setlength{\textwidth}{\resulttextwidth cm}
-  \setlength{\textheight}{\resulttextheight cm}
-\fi
+%% Set text{height,width} to paper{height,width} - 1cm
+\FPupn{\textheightValue}{1 paperheightValue -}
+\FPupn{\textwidthValue}{1 paperwidthValue  -}
+\setlength{\textheight}{\textheightValue cm}
+\setlength{\textwidth}{\textwidthValue cm}
 
 %% Setting proper dimensions for a DIN A0 printer
 \setlength{\headheight}{0 cm}
