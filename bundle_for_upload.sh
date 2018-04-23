@@ -7,5 +7,4 @@ mv README.md README
 pdflatex beamerposter
 rm beamerposter.aux beamerposter.log 
 cd ..
-mv 
 zip -r beamerposter-$(date +%Y%m%d).zip beamerposter
