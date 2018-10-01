@@ -54,6 +54,11 @@
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% logo path
+\def\@logopath{None}
+\newcommand{\setlogo}[1]{\def\@logopath{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \setbeamertemplate{headline}{  
   \leavevmode
 
@@ -71,7 +76,7 @@
       \begin{column}{.25\paperwidth}
         \vskip8ex
         \begin{center}
-          \includegraphics[width=.95\linewidth]{figures/deselaers/logos/rwthaachenuniversity-yelloworange}
+          \includegraphics[width=.95\linewidth]{\@logopath}
         \end{center}
         \vskip2ex
       \end{column}
@@ -102,6 +107,14 @@
 %}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% url
+\def\@authorurl{None}
+\newcommand{\setauthorurl}[1]{\def\@authorurl{#1}}
+% email
+\def\@authoremail{None}
+\newcommand{\setauthoremail}[1]{\def\@authoremail{#1}}
+
+
 \setbeamertemplate{footline}{
   \begin{beamercolorbox}[wd=\paperwidth]{upper separation line foot}
     \rule{0pt}{3pt}
@@ -109,9 +122,9 @@
   
   \leavevmode%
   \begin{beamercolorbox}[ht=4ex,leftskip=1em,rightskip=1em]{author in head/foot}%
-    \texttt{http://www-i6.informatik.rwth-aachen.de}
+    \texttt{\@authorurl}
     \hfill
-    \texttt{<surname>@cs.rwth-aachen.de}
+    \texttt{\@authoremail}
     \vskip1ex
   \end{beamercolorbox}
   \vskip0pt%
