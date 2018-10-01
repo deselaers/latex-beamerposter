@@ -54,6 +54,11 @@
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% logo path
+\def\@logopath{None}
+\newcommand{\setlogo}[1]{\def\@logopath{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \setbeamertemplate{headline}{  
   \leavevmode
 
@@ -71,7 +76,7 @@
       \begin{column}{.25\paperwidth}
         \vskip8ex
         \begin{center}
-          \includegraphics[width=.95\linewidth]{figures/deselaers/logos/rwthaachenuniversity-yelloworange}
+          \includegraphics[width=.95\linewidth]{\@logopath}
         \end{center}
         \vskip2ex
       \end{column}
